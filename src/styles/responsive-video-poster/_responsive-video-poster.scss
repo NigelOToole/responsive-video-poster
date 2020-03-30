@@ -1,0 +1,83 @@
+.responsive-video-poster {
+  position: relative;
+}
+
+  .poster-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+
+    // Reset default button styles
+    padding: 0;
+    background: none;
+    border: none;
+
+    // Transition between states
+    transition: all .3s;
+    &.is-anim {
+      opacity: 0;
+    }
+
+    &.is-inactive {
+      display: none;
+    }
+  }
+
+    .poster-overlay-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      padding: 8px;
+      font-size: 4rem;
+      line-height: .9;
+      color: #fff;
+      border-radius: 50%;
+      background: #000;
+
+      opacity: .8;
+      transition: all .3s;
+
+      .poster-overlay:hover & {
+        opacity: 1;
+      }
+    }
+
+      .poster-overlay-icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        text-indent: .1em;
+      }
+
+  .poster-src {
+    position: relative;
+    z-index: 20;
+
+    // If not using bootstrap
+    max-width: 100%;
+    height: auto;
+  }
+
+  .poster--cover, .poster--contain {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .poster--contain {
+    object-fit: contain;
+  }
+
+  .poster--bg {
+    background-color: #ddd;
+  }
+
+  .video-src {
+    z-index: 10;
+  }
