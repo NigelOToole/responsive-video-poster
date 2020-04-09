@@ -6,16 +6,16 @@
   @param {Object} object - Container for all options.
     @param {string} selector - Container element selector.
     @param {string} overlaySelector - Overlay element used to hide poster and show video when clicked.
-    @param {string} posterSrcSelector - Image element to be used as the poster.
-    @param {string} videoSrcSelector - The video element.
+    @param {string} posterSelector - Image element to be used as the poster.
+    @param {string} videoSelector - The video element.
     @param {string} hideClass - CSS class used to hide poster and overlay.
 */
 
 const ResponsiveVideoPoster = function({
   selector: selector = '.responsive-video-poster',
   overlaySelector: overlaySelector = '.poster-overlay',
-  posterSrcSelector: posterSrcSelector = '.poster-src',
-  videoSrcSelector: videoSrcSelector = '.video-src',
+  posterSelector: posterSelector = '.poster',
+  videoSelector: videoSelector = '.video',
   animClass: animClass = 'is-anim',
   inactiveClass: inactiveClass = 'is-inactive',
 	} = {}) {
@@ -55,32 +55,41 @@ const ResponsiveVideoPoster = function({
     event.preventDefault();
     
     let transitionDuration = getTransitionDuration(overlay);
+    let embedOverlap = (transitionDuration <= 1000) ? 0 : transitionDuration-1000;
+    let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
+
 		overlay.classList.add(animClass);
 
     video.setAttribute('aria-hidden', false);
     video.setAttribute('tabindex', 0);
     video.focus();
 
-    console.log(video.nodeName);
+    console.log(video.nodeName, transitionDuration);
 
 		setTimeout(() => {
 			overlay.classList.remove(animClass);
 			overlay.classList.add(inactiveClass);
       overlay.style.display = 'none';
+		}, transitionDuration);
 
-      if(video.nodeName === 'VIDEO') {
+
+    if(videoType === 'video') {
+      setTimeout(() => {
         video.play();
         if(videoControls) video.setAttribute('controls', '');
-      }
-      else {
-        // video.setAttribute('src', `${video.getAttribute('src')}?autoplay=1`);
+      }, transitionDuration);
+    }
+    else {
+      setTimeout(() => {
         video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
-
-        
-      }
-      
-		}, transitionDuration);
+      }, embedOverlap);
+    }
     
+  }
+
+
+  const playEmbed = function(video) {
+    video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
   }
 
 
@@ -89,7 +98,7 @@ const ResponsiveVideoPoster = function({
     
     elements.forEach(function(item) {
       let overlay = item.querySelector(overlaySelector);
-      let video = item.querySelector(videoSrcSelector);
+      let video = item.querySelector(videoSelector);
       if(overlay === null || video === null) return;
 
       video.setAttribute('aria-hidden', true);

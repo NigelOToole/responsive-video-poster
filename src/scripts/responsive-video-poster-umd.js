@@ -40,17 +40,25 @@
         posterSrcSelector = _ref$posterSrcSelecto === void 0 ? '.poster-src' : _ref$posterSrcSelecto,
         _ref$videoSrcSelector = _ref.videoSrcSelector,
         videoSrcSelector = _ref$videoSrcSelector === void 0 ? '.video-src' : _ref$videoSrcSelector,
-        _ref$hideClass = _ref.hideClass,
-        hideClass = _ref$hideClass === void 0 ? 'd-none' : _ref$hideClass;
+        _ref$animClass = _ref.animClass,
+        animClass = _ref$animClass === void 0 ? 'is-anim' : _ref$animClass,
+        _ref$inactiveClass = _ref.inactiveClass,
+        inactiveClass = _ref$inactiveClass === void 0 ? 'is-inactive' : _ref$inactiveClass;
 
     // Options
-    var elements = document.querySelectorAll(selector); // Utils
+    var elements = document.querySelectorAll(selector);
+    var videoControls; // Utils
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
       var transitionDurationNumber = parseFloat(transitionDuration);
       transitionDuration = transitionDuration.indexOf('ms') > -1 ? transitionDurationNumber : transitionDurationNumber * 1000;
       return transitionDuration;
+    };
+
+    var addParameterToURL = function addParameterToURL(url, param) {
+      url += (url.split('?')[1] ? '&' : '?') + param;
+      return url;
     };
 
     var fireEvent = function fireEvent(item, eventName, eventDetail) {
@@ -62,27 +70,41 @@
     }; // Click handler
 
 
-    var clickHandler = function clickHandler(event, overlay, poster, video) {
+    var clickHandler = function clickHandler(event, overlay, video, videoControls) {
       event.preventDefault();
-      poster.classList.add(hideClass);
-      overlay.classList.add(hideClass);
+      var transitionDuration = getTransitionDuration(overlay);
+      overlay.classList.add(animClass);
       video.setAttribute('aria-hidden', false);
       video.setAttribute('tabindex', 0);
       video.focus();
-      video.play();
+      console.log(video.nodeName);
+      setTimeout(function () {
+        overlay.classList.remove(animClass);
+        overlay.classList.add(inactiveClass);
+        overlay.style.display = 'none';
+
+        if (video.nodeName === 'VIDEO') {
+          video.play();
+          if (videoControls) video.setAttribute('controls', '');
+        } else {
+          // video.setAttribute('src', `${video.getAttribute('src')}?autoplay=1`);
+          video.setAttribute('src', "".concat(addParameterToURL(video.getAttribute('src'), 'autoplay=1')));
+        }
+      }, transitionDuration);
     }; // Init
 
 
     var init = function init() {
       elements.forEach(function (item) {
         var overlay = item.querySelector(overlaySelector);
-        var poster = item.querySelector(posterSrcSelector);
         var video = item.querySelector(videoSrcSelector);
-        if (overlay === null || poster === null || video === null) return;
+        if (overlay === null || video === null) return;
         video.setAttribute('aria-hidden', true);
         video.setAttribute('tabindex', -1);
+        var videoControls = video.getAttribute('controls') === '' ? true : false;
+        if (videoControls) video.removeAttribute('controls');
         overlay.addEventListener('click', function (event) {
-          return clickHandler(event, overlay, poster, video);
+          return clickHandler(event, overlay, video, videoControls);
         });
       });
     }; // Self initiate

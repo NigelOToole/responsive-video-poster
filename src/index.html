@@ -36,7 +36,7 @@
     <div class="fullwidth">
       <div class="container separator">
 
-        <h3>Default</h3>
+        <h3>Default: Video hosted on your server and the poster is of the first frame.</h3>
 
         <div class="row">
           <div class="col-md-8">
@@ -46,10 +46,10 @@
               <button class="poster-overlay embed-responsive-item" aria-label="Play video">
                 <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
 
-                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster-src">
+                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster">
               </button>
 
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" controls class="video-src embed-responsive-item"></video>
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" controls class="video embed-responsive-item"></video>
 
             </div>
 
@@ -66,7 +66,7 @@
     <div class="fullwidth">
       <div class="container separator">
 
-        <h3>Embedded video</h3>
+        <h3>Embedded video: Video embedded from YouTube and the poster is not the first frame.</h3>
 
         <div class="row">
           <div class="col-md-8">
@@ -76,14 +76,10 @@
               <button class="poster-overlay embed-responsive-item" aria-label="Play video">
                 <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
 
-                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster-src">
+                <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster">
               </button>
 
-              <!-- <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" controls class="video-src embed-responsive-item"></video> -->
-
-              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4" class="video-src"></iframe>
-            <!-- <iframe src="https://player.vimeo.com/video/278996876?color=6cbef1&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" class="video-src" allowfullscreen></iframe> -->
-
+              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4" class="video"  id="existing-iframe-example"></iframe>
             </div>
 
           </div>
@@ -96,10 +92,10 @@
 
 
 
-    <div class="fullwidth">
+    <!-- <div class="fullwidth">
       <div class="container separator">
 
-        <h3>Different style for posterr overlay</h3>
+        <h3>Different style for poster overlay</h3>
 
         <div class="row">
           <div class="col-sm-8">
@@ -107,12 +103,10 @@
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
                 
                 <button class="poster-overlay embed-responsive-item" aria-label="Play video">
-                  <!-- <img src="images/coverr-lofoten-rocks-1576261169444.jpg" class="poster-src"> -->
-                  <!-- <img src="images/coverr-lofoten-rocks-1576261169444-v2.png" class="poster-src"> -->
-                  <img src="images/mountain-1.jpg" class="poster-src poster--cover">
+                  <img src="images/mountain-1.jpg" class="poster poster--cover">
                 </button>
 
-              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" controls class="video-src embed-responsive-item"></video>
+              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" controls class="video embed-responsive-item"></video>
             </div>
 
           </div>
@@ -120,7 +114,7 @@
 
 
       </div>
-    </div>
+    </div> -->
 
 
     <!-- <div class="fullwidth">
@@ -379,7 +373,6 @@ $ gulp serve
         Made by Nigel O Toole <a href="http://www.purestructure.com" target="_blank" rel="noopener">pure structure</a>
       </div>
     </footer>
-
 
     <script src="scripts/main.js" type="module"></script>
 
