@@ -5,15 +5,17 @@
 
   @param {Object} object - Container for all options.
     @param {string} selector - Container element selector.
-    @param {string} overlaySelector - Overlay element used to hide poster and show video when clicked.
+    @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
     @param {string} posterSelector - Image element to be used as the poster.
-    @param {string} videoSelector - The video element.
-    @param {string} hideClass - CSS class used to hide poster and overlay.
+    @param {string} videoSelector - Video element.
+    @param {string} animClass - CSS class to transition the video overlay between states.
+    @param {string} inactiveClass - CSS class to hide the video overlay.
+    @param {integer} embedPreload - Amount of time given to preload an embedded video.
 */
 
 const ResponsiveVideoPoster = function({
   selector: selector = '.responsive-video-poster',
-  overlaySelector: overlaySelector = '.poster-overlay',
+  overlaySelector: overlaySelector = '.video-overlay',
   posterSelector: posterSelector = '.poster',
   videoSelector: videoSelector = '.video',
   animClass: animClass = 'is-anim',

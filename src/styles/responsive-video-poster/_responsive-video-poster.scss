@@ -2,7 +2,7 @@
   position: relative;
 }
 
-  .poster-overlay {
+  .video-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -28,7 +28,7 @@
     // opacity: 0;
   }
 
-    .poster-overlay-btn {
+    .poster-btn {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -43,12 +43,12 @@
       opacity: .8;
       transition: all .3s;
 
-      .poster-overlay:hover & {
+      .video-overlay:hover & {
         opacity: 1;
       }
     }
 
-      .poster-overlay-icon {
+      .poster-btn-icon {
         display: inline-block;
         width: 1em;
         height: 1em;
@@ -64,6 +64,7 @@
     height: auto;
   }
 
+  // If the poster image is not the same size as the video these classes can be used to fill the space
   .poster--cover, .poster--contain {
     width: 100%;
     height: 100%;
@@ -74,10 +75,6 @@
     object-fit: contain;
   }
 
-  .poster--bg {
-    background-color: #ddd;
-  }
-
   .video {
     z-index: 10;
   }
@@ -85,3 +82,4 @@
   iframe.video {
     background-color: #000;
   }
+  

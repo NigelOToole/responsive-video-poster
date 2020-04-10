@@ -28,8 +28,8 @@
 
     <div class="fullwidth">
       <div class="container separator">
-        <h2 class="m-0">A JavaScript plugin ????</h2>
-        <p>The poster attribute of the video element only allows specifying one image which is not helpful for performance as a large image will need to be specified to suit all screens. This plugin allow you to use a standard image tag(img or picture) as the poster img so a src-set can be specified to only load the most appropriate image for the current screen. This also allows you control over the styling of the video poster before it loads. The examples also include more performance optimizations for loading of videos both native and embedded only when the user wants to play the video.</p>
+        <h2 class="m-0">A JavaScript plugin to use a responsive image as the poster image for a video. This is better for performance and allows for styling control of video placeholders.</h2>
+        <p>The poster attribute of the video element only allows specifying one image which is not optimal for performance as a large image will need to be specified to suit all screens. This plugin uses a standard image tag(img or picture) as the poster img so a src-set can be specified. This means only the most appropriate image for the current screen will be loaded. The examples below also include more performance optimizations for loading of both native and embedded videos.</p>
         srcdoc: https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g
         covverr videos: https://coverr.co/videos/lago-di-braies-y1yBShzUTZ, https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG
         youtube video
@@ -50,13 +50,13 @@
             
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
                 
-              <button class="poster-overlay embed-responsive-item" aria-label="Play video">
-                <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
+              <button class="video-overlay embed-responsive-item" aria-label="Play video">
+                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
               </button>
 
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item"></video>
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
 
             </div>
 
@@ -81,8 +81,8 @@
             
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
                 
-              <button class="poster-overlay embed-responsive-item" aria-label="Play video">
-                <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
+              <button class="video-overlay embed-responsive-item" aria-label="Play video">
+                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <picture>
                   <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.webp 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.webp 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/webp">
@@ -91,7 +91,7 @@
                 </picture>
               </button>
 
-              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" class="video embed-responsive-item"></video>
+              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
 
             </div>
 
@@ -119,8 +119,8 @@
             
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
                 
-              <button class="poster-overlay embed-responsive-item" aria-label="Play video">
-                <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
+              <button class="video-overlay embed-responsive-item" aria-label="Play video">
+                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
               </button>
