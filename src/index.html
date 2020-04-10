@@ -29,6 +29,10 @@
     <div class="fullwidth">
       <div class="container separator">
         <h2 class="m-0">A JavaScript plugin ????</h2>
+        <p>The poster attribute of the video element only allows specifying one image which is not helpful for performance as a large image will need to be specified to suit all screens. This plugin allow you to use a standard image tag(img or picture) as the poster img so a src-set can be specified to only load the most appropriate image for the current screen. This also allows you control over the styling of the video poster before it loads. The examples also include more performance optimizations for loading of videos both native and embedded only when the user wants to play the video.</p>
+        srcdoc: https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g
+        covverr videos: https://coverr.co/videos/lago-di-braies-y1yBShzUTZ, https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG
+        youtube video
       </div>
     </div>
 
@@ -36,9 +40,12 @@
     <div class="fullwidth">
       <div class="container separator">
 
-        <h3>Default: Video hosted on your server and the poster is of the first frame.</h3>
-
         <div class="row">
+          <div class="col-md-4"> 
+            <h3>&lt;video&gt; and &lt;img&gt;</h3>
+            <p>Poster is the first frame of the video.</p>
+          </div>
+
           <div class="col-md-8">
             
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
@@ -46,10 +53,45 @@
               <button class="poster-overlay embed-responsive-item" aria-label="Play video">
                 <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
 
-                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster">
+                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
               </button>
 
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" controls class="video embed-responsive-item"></video>
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item"></video>
+
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="fullwidth">
+      <div class="container separator">
+
+        <div class="row">
+          <div class="col-md-4"> 
+            <h3>&lt;video&gt; and &lt;picture&gt;</h3>
+            <p>Poster is the last frame of the video.</p>
+          </div>
+
+          <div class="col-md-8">
+            
+            <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
+                
+              <button class="poster-overlay embed-responsive-item" aria-label="Play video">
+                <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
+
+                <picture>
+                  <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.webp 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.webp 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/webp">
+                  <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.jpg 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/jpg">
+                  <img src="images/1080/coverr-lofoten-rocks-1576261169444-last-frame.jpg" class="poster" alt="Mountains in Lofoten, Norway" >
+                </picture>
+              </button>
+
+              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" class="video embed-responsive-item"></video>
 
             </div>
 
@@ -66,9 +108,13 @@
     <div class="fullwidth">
       <div class="container separator">
 
-        <h3>Embedded video: Video embedded from YouTube and the poster is not the first frame.</h3>
 
         <div class="row">
+          <div class="col-md-4">        
+            <h3>&lt;iframe&gt; and &lt;img&gt;</h3>
+            <p>Poster is the middle frame of the video. The iframe includes and empty srcdoc attribute which prevents the video site from loading its scripts until the user clicks the play button. This will reduce the initial page weight but may seem laggy to users so remove if not needed.</p>
+          </div>
+
           <div class="col-md-8">
             
             <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
@@ -76,10 +122,10 @@
               <button class="poster-overlay embed-responsive-item" aria-label="Play video">
                 <div class="poster-overlay-btn"><span class="poster-overlay-icon">▶</span></div>
 
-                <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster">
+                <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
               </button>
 
-              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4" class="video"  id="existing-iframe-example"></iframe>
+              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4" srcdoc="" class="video" title="Drone Grand Tour footage of the Tustan Karpaty mountains"></iframe>
             </div>
 
           </div>
@@ -88,8 +134,7 @@
 
       </div>
     </div>
-
-
+  
 
 
     <!-- <div class="fullwidth">

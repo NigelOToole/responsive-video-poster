@@ -18,11 +18,11 @@ const ResponsiveVideoPoster = function({
   videoSelector: videoSelector = '.video',
   animClass: animClass = 'is-anim',
   inactiveClass: inactiveClass = 'is-inactive',
+  embedPreload: embedPreload = 500,
 	} = {}) {
 
   // Options
   const elements = document.querySelectorAll(selector);
-  let videoControls;
 
 
 
@@ -55,7 +55,7 @@ const ResponsiveVideoPoster = function({
     event.preventDefault();
     
     let transitionDuration = getTransitionDuration(overlay);
-    let embedOverlap = (transitionDuration <= 1000) ? 0 : transitionDuration-1000;
+    let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
     let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
 
 		overlay.classList.add(animClass);
@@ -64,16 +64,9 @@ const ResponsiveVideoPoster = function({
     video.setAttribute('tabindex', 0);
     video.focus();
 
-    console.log(video.nodeName, transitionDuration);
-
-		setTimeout(() => {
-			overlay.classList.remove(animClass);
-			overlay.classList.add(inactiveClass);
-      overlay.style.display = 'none';
-		}, transitionDuration);
-
-
     if(videoType === 'video') {
+      video.setAttribute('preload', 'auto');
+
       setTimeout(() => {
         video.play();
         if(videoControls) video.setAttribute('controls', '');
@@ -81,15 +74,17 @@ const ResponsiveVideoPoster = function({
     }
     else {
       setTimeout(() => {
+        if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
         video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
-      }, embedOverlap);
+      }, embedTransitionDuration);
     }
+
+		setTimeout(() => {
+			overlay.classList.remove(animClass);
+			overlay.classList.add(inactiveClass);
+      overlay.style.display = 'none';
+		}, transitionDuration);
     
-  }
-
-
-  const playEmbed = function(video) {
-    video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
   }
 
 
@@ -104,8 +99,10 @@ const ResponsiveVideoPoster = function({
       video.setAttribute('aria-hidden', true);
       video.setAttribute('tabindex', -1);
 
-      let videoControls = (video.getAttribute('controls') === '') ? true : false;
+      let videoControls = (video.getAttribute('controls') === '');
       if(videoControls) video.removeAttribute('controls');
+
+      // console.log(video.getAttribute('srcdoc') !== null);
 
       overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
     });

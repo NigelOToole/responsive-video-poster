@@ -26,8 +26,8 @@
     @param {Object} object - Container for all options.
       @param {string} selector - Container element selector.
       @param {string} overlaySelector - Overlay element used to hide poster and show video when clicked.
-      @param {string} posterSrcSelector - Image element to be used as the poster.
-      @param {string} videoSrcSelector - The video element.
+      @param {string} posterSelector - Image element to be used as the poster.
+      @param {string} videoSelector - The video element.
       @param {string} hideClass - CSS class used to hide poster and overlay.
   */
   var ResponsiveVideoPoster = function ResponsiveVideoPoster() {
@@ -36,18 +36,20 @@
         selector = _ref$selector === void 0 ? '.responsive-video-poster' : _ref$selector,
         _ref$overlaySelector = _ref.overlaySelector,
         overlaySelector = _ref$overlaySelector === void 0 ? '.poster-overlay' : _ref$overlaySelector,
-        _ref$posterSrcSelecto = _ref.posterSrcSelector,
-        posterSrcSelector = _ref$posterSrcSelecto === void 0 ? '.poster-src' : _ref$posterSrcSelecto,
-        _ref$videoSrcSelector = _ref.videoSrcSelector,
-        videoSrcSelector = _ref$videoSrcSelector === void 0 ? '.video-src' : _ref$videoSrcSelector,
+        _ref$posterSelector = _ref.posterSelector,
+        posterSelector = _ref$posterSelector === void 0 ? '.poster' : _ref$posterSelector,
+        _ref$videoSelector = _ref.videoSelector,
+        videoSelector = _ref$videoSelector === void 0 ? '.video' : _ref$videoSelector,
         _ref$animClass = _ref.animClass,
         animClass = _ref$animClass === void 0 ? 'is-anim' : _ref$animClass,
         _ref$inactiveClass = _ref.inactiveClass,
-        inactiveClass = _ref$inactiveClass === void 0 ? 'is-inactive' : _ref$inactiveClass;
+        inactiveClass = _ref$inactiveClass === void 0 ? 'is-inactive' : _ref$inactiveClass,
+        _ref$embedPreload = _ref.embedPreload,
+        embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
 
     // Options
-    var elements = document.querySelectorAll(selector);
-    var videoControls; // Utils
+    var elements = document.querySelectorAll(selector); // let videoControls;
+    // Utils
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
@@ -73,35 +75,41 @@
     var clickHandler = function clickHandler(event, overlay, video, videoControls) {
       event.preventDefault();
       var transitionDuration = getTransitionDuration(overlay);
+      var embedTransitionDuration = transitionDuration <= embedPreload ? 0 : transitionDuration - embedPreload;
+      var videoType = video.nodeName === 'VIDEO' ? 'video' : 'embed';
       overlay.classList.add(animClass);
       video.setAttribute('aria-hidden', false);
       video.setAttribute('tabindex', 0);
       video.focus();
-      console.log(video.nodeName);
+      console.log(video.nodeName, transitionDuration);
       setTimeout(function () {
         overlay.classList.remove(animClass);
         overlay.classList.add(inactiveClass);
         overlay.style.display = 'none';
+      }, transitionDuration);
 
-        if (video.nodeName === 'VIDEO') {
+      if (videoType === 'video') {
+        setTimeout(function () {
           video.play();
           if (videoControls) video.setAttribute('controls', '');
-        } else {
-          // video.setAttribute('src', `${video.getAttribute('src')}?autoplay=1`);
+        }, transitionDuration);
+      } else {
+        setTimeout(function () {
           video.setAttribute('src', "".concat(addParameterToURL(video.getAttribute('src'), 'autoplay=1')));
-        }
-      }, transitionDuration);
+        }, embedTransitionDuration);
+      }
     }; // Init
 
 
     var init = function init() {
       elements.forEach(function (item) {
         var overlay = item.querySelector(overlaySelector);
-        var video = item.querySelector(videoSrcSelector);
+        var video = item.querySelector(videoSelector);
         if (overlay === null || video === null) return;
         video.setAttribute('aria-hidden', true);
-        video.setAttribute('tabindex', -1);
-        var videoControls = video.getAttribute('controls') === '' ? true : false;
+        video.setAttribute('tabindex', -1); // let videoControls = (video.getAttribute('controls') === '') ? true : false;
+
+        var videoControls = video.getAttribute('controls') === '';
         if (videoControls) video.removeAttribute('controls');
         overlay.addEventListener('click', function (event) {
           return clickHandler(event, overlay, video, videoControls);

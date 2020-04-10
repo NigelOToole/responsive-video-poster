@@ -10,15 +10,12 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    transition: all .3s ease-in;
 
     // Reset default button styles
     padding: 0;
     background: none;
     border: none;
-
-    // Transition between states
-    // transition: all .3s;
-    transition: all 2.3s;
 
     &.is-anim {
       opacity: 0;
@@ -27,6 +24,8 @@
     &.is-inactive {
       display: none;
     }
+
+    // opacity: 0;
   }
 
     .poster-overlay-btn {
@@ -81,4 +80,8 @@
 
   .video {
     z-index: 10;
+  }
+
+  iframe.video {
+    background-color: #000;
   }
