@@ -25,17 +25,19 @@
   
     @param {Object} object - Container for all options.
       @param {string} selector - Container element selector.
-      @param {string} overlaySelector - Overlay element used to hide poster and show video when clicked.
+      @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
       @param {string} posterSelector - Image element to be used as the poster.
-      @param {string} videoSelector - The video element.
-      @param {string} hideClass - CSS class used to hide poster and overlay.
+      @param {string} videoSelector - Video element.
+      @param {string} animClass - CSS class to transition the video overlay between states.
+      @param {string} inactiveClass - CSS class to hide the video overlay.
+      @param {integer} embedPreload - Amount of time given to preload an embedded video.
   */
   var ResponsiveVideoPoster = function ResponsiveVideoPoster() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
         _ref$selector = _ref.selector,
         selector = _ref$selector === void 0 ? '.responsive-video-poster' : _ref$selector,
         _ref$overlaySelector = _ref.overlaySelector,
-        overlaySelector = _ref$overlaySelector === void 0 ? '.poster-overlay' : _ref$overlaySelector,
+        overlaySelector = _ref$overlaySelector === void 0 ? '.video-overlay' : _ref$overlaySelector,
         _ref$posterSelector = _ref.posterSelector,
         posterSelector = _ref$posterSelector === void 0 ? '.poster' : _ref$posterSelector,
         _ref$videoSelector = _ref.videoSelector,
@@ -48,8 +50,7 @@
         embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
 
     // Options
-    var elements = document.querySelectorAll(selector); // let videoControls;
-    // Utils
+    var elements = document.querySelectorAll(selector); // Utils
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
@@ -69,11 +70,47 @@
         detail: eventDetail
       });
       item.dispatchEvent(event);
-    }; // Click handler
+    }; // // Click handler
+    // const clickHandler = function(event, overlay, video, videoControls) {
+    //   event.preventDefault();
+    //   let transitionDuration = getTransitionDuration(overlay);
+    //   let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
+    //   let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
+    // 	overlay.classList.add(animClass);
+    //   video.setAttribute('aria-hidden', false);
+    //   video.setAttribute('tabindex', 0);
+    //   video.focus();
+    //   if(videoType === 'video') {
+    //     video.setAttribute('preload', 'auto');
+    //     setTimeout(() => {
+    //       video.play();
+    //       if(videoControls) video.setAttribute('controls', '');
+    //     }, transitionDuration);
+    //   }
+    //   else {
+    //     setTimeout(() => {
+    //       if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
+    //       video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
+    //     }, embedTransitionDuration);
+    //   }
+    // 	setTimeout(() => {
+    // 		overlay.classList.remove(animClass);
+    // 		overlay.classList.add(inactiveClass);
+    //     overlay.style.display = 'none';
+    // 	}, transitionDuration);
+    // }
+    // Click handler
 
 
-    var clickHandler = function clickHandler(event, overlay, video, videoControls) {
+    var clickHandler = function clickHandler(event, element) {
       event.preventDefault();
+      playVideo(element);
+    };
+
+    var playVideo = function playVideo(element) {
+      var overlay = element.overlay;
+      var video = element.video;
+      var videoControls = element.videoControls;
       var transitionDuration = getTransitionDuration(overlay);
       var embedTransitionDuration = transitionDuration <= embedPreload ? 0 : transitionDuration - embedPreload;
       var videoType = video.nodeName === 'VIDEO' ? 'video' : 'embed';
@@ -81,23 +118,25 @@
       video.setAttribute('aria-hidden', false);
       video.setAttribute('tabindex', 0);
       video.focus();
-      console.log(video.nodeName, transitionDuration);
-      setTimeout(function () {
-        overlay.classList.remove(animClass);
-        overlay.classList.add(inactiveClass);
-        overlay.style.display = 'none';
-      }, transitionDuration);
 
       if (videoType === 'video') {
+        video.setAttribute('preload', 'auto');
         setTimeout(function () {
           video.play();
           if (videoControls) video.setAttribute('controls', '');
         }, transitionDuration);
       } else {
         setTimeout(function () {
+          if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
           video.setAttribute('src', "".concat(addParameterToURL(video.getAttribute('src'), 'autoplay=1')));
         }, embedTransitionDuration);
       }
+
+      setTimeout(function () {
+        overlay.classList.remove(animClass);
+        overlay.classList.add(inactiveClass);
+        overlay.style.display = 'none';
+      }, transitionDuration);
     }; // Init
 
 
@@ -107,12 +146,17 @@
         var video = item.querySelector(videoSelector);
         if (overlay === null || video === null) return;
         video.setAttribute('aria-hidden', true);
-        video.setAttribute('tabindex', -1); // let videoControls = (video.getAttribute('controls') === '') ? true : false;
-
+        video.setAttribute('tabindex', -1);
         var videoControls = video.getAttribute('controls') === '';
-        if (videoControls) video.removeAttribute('controls');
+        if (videoControls) video.removeAttribute('controls'); // console.log(video.getAttribute('srcdoc') !== null);
+
+        item.overlay = overlay;
+        item.video = video;
+        item.videoControls = videoControls;
+        console.log(overlay, video, videoControls); // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+
         overlay.addEventListener('click', function (event) {
-          return clickHandler(event, overlay, video, videoControls);
+          return clickHandler(event, item);
         });
       });
     }; // Self initiate
@@ -125,7 +169,8 @@
     ; // Reveal API
 
     return {
-      init: init
+      init: init,
+      playVideo: playVideo
     };
   };
 

@@ -52,9 +52,56 @@ const ResponsiveVideoPoster = function({
 
 
 
+  // // Click handler
+  // const clickHandler = function(event, overlay, video, videoControls) {
+  //   event.preventDefault();
+    
+  //   let transitionDuration = getTransitionDuration(overlay);
+  //   let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
+  //   let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
+
+	// 	overlay.classList.add(animClass);
+
+  //   video.setAttribute('aria-hidden', false);
+  //   video.setAttribute('tabindex', 0);
+  //   video.focus();
+
+  //   if(videoType === 'video') {
+  //     video.setAttribute('preload', 'auto');
+
+  //     setTimeout(() => {
+  //       video.play();
+  //       if(videoControls) video.setAttribute('controls', '');
+  //     }, transitionDuration);
+  //   }
+  //   else {
+  //     setTimeout(() => {
+  //       if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
+  //       video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
+  //     }, embedTransitionDuration);
+  //   }
+
+	// 	setTimeout(() => {
+	// 		overlay.classList.remove(animClass);
+	// 		overlay.classList.add(inactiveClass);
+  //     overlay.style.display = 'none';
+	// 	}, transitionDuration);
+    
+  // }
+
+
+
   // Click handler
-  const clickHandler = function(event, overlay, video, videoControls) {
+  const clickHandler = function(event, element) {
     event.preventDefault();
+    playVideo(element);
+  }  
+  
+
+  const playVideo = function(element) {
+    let overlay = element.overlay;
+    let video = element.video;
+    let videoControls = element.videoControls;
     
     let transitionDuration = getTransitionDuration(overlay);
     let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
@@ -106,7 +153,14 @@ const ResponsiveVideoPoster = function({
 
       // console.log(video.getAttribute('srcdoc') !== null);
 
-      overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+      item.overlay = overlay;
+      item.video = video;
+      item.videoControls = videoControls;
+
+      console.log(overlay, video, videoControls)
+
+      // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+      overlay.addEventListener('click', (event) => clickHandler(event, item));
     });
     
   };
@@ -120,7 +174,8 @@ const ResponsiveVideoPoster = function({
 
   // Reveal API
   return {
-    init
+    init,
+    playVideo
   };
 
 };
