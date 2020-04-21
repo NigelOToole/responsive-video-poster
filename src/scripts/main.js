@@ -1,23 +1,42 @@
-// import ResponsiveVideoPoster from './responsive-video-poster.js';
-import ResponsiveVideoPoster from './responsive-video-poster-class.js';
+import ResponsiveVideoPoster from './responsive-video-poster.js';
+// import ResponsiveVideoPoster from './responsive-video-poster-class.js';
 
 
 // ResponsiveVideoPoster();
 
-// const responsiveVideoPoster = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-default' });
-// // responsiveVideoPoster.playVideo(document.querySelector('.responsive-video-poster--demo-default'));
-// responsiveVideoPoster.playVideo();
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-defaultgkjg' });
+// const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: document.querySelector('#responsive-video-poster--demo-default') });
+// responsiveVideoPosterDefault.playVideo();
+
+const responsiveVideoPosterPicture = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-picture' });
+
+// console.log(responsiveVideoPosterDefault);
+
+
+
+// const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');
+
+// if (responsiveVideoPosterElements.length) {
+//   responsiveVideoPosterElements.forEach((item) => {
+//     let instance = new ResponsiveVideoPoster({ selector: item });
+
+//   });
+// };    
+
+
+
+
 
 
 // Class
-const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');
+// const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');
 
-if (responsiveVideoPosterElements.length) {
-  responsiveVideoPosterElements.forEach((item) => {
-    let instance = new ResponsiveVideoPoster({ selector: item });
+// if (responsiveVideoPosterElements.length) {
+//   responsiveVideoPosterElements.forEach((item) => {
+//     let instance = new ResponsiveVideoPoster({ selector: item });
 
-  });
-};    
+//   });
+// };    
 
 
 // const responsiveVideoPoster = new ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-default' });

@@ -50,7 +50,8 @@
         embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
 
     // Options
-    var elements = document.querySelectorAll(selector); // Utils
+    var elements = document.querySelectorAll(selector);
+    var instance; // Utils
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
@@ -105,9 +106,11 @@
     var clickHandler = function clickHandler(event, element) {
       event.preventDefault();
       playVideo(element);
-    };
+    }; // const playVideo = function(element) {
 
-    var playVideo = function playVideo(element) {
+
+    var playVideo = function playVideo() {
+      var element = instance;
       var overlay = element.overlay;
       var video = element.video;
       var videoControls = element.videoControls;
@@ -142,6 +145,7 @@
 
     var init = function init() {
       elements.forEach(function (item) {
+        instance = item;
         var overlay = item.querySelector(overlaySelector);
         var video = item.querySelector(videoSelector);
         if (overlay === null || video === null) return;
@@ -152,11 +156,11 @@
 
         item.overlay = overlay;
         item.video = video;
-        item.videoControls = videoControls;
-        console.log(overlay, video, videoControls); // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+        item.videoControls = videoControls; // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+        // overlay.addEventListener('click', (event) => clickHandler(event, item));
 
         overlay.addEventListener('click', function (event) {
-          return clickHandler(event, item);
+          return clickHandler(event);
         });
       });
     }; // Self initiate
