@@ -2,26 +2,38 @@ import ResponsiveVideoPoster from './responsive-video-poster.js';
 // import ResponsiveVideoPoster from './responsive-video-poster-class.js';
 
 
-// ResponsiveVideoPoster();
 
-const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-defaultgkjg' });
-// const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: document.querySelector('#responsive-video-poster--demo-default') });
-// responsiveVideoPosterDefault.playVideo();
-
-const responsiveVideoPosterPicture = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-picture' });
-
-// console.log(responsiveVideoPosterDefault);
+// Init with string
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-default' });
 
 
+// Init with element
+const responsiveVideoPosterPictureElement = document.querySelector('#responsive-video-poster--demo-picture');
+const responsiveVideoPosterPicture = ResponsiveVideoPoster({ selector: responsiveVideoPosterPictureElement });
 
+
+
+// Init by loop - this wont allow access to methods
 // const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');
 
 // if (responsiveVideoPosterElements.length) {
 //   responsiveVideoPosterElements.forEach((item) => {
-//     let instance = new ResponsiveVideoPoster({ selector: item });
-
+//     ResponsiveVideoPoster({ selector: item });
 //   });
 // };    
+
+// if (responsiveVideoPosterElements.length) {
+//   for (const item of responsiveVideoPosterElements) {
+//     ResponsiveVideoPoster({ selector: item });
+//   }
+// };    
+
+
+// Methods
+setTimeout(() => {
+  responsiveVideoPosterDefault.playVideo();
+}, 500)
+
 
 
 

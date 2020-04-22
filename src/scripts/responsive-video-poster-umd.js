@@ -50,8 +50,11 @@
         embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
 
     // Options
-    var elements = document.querySelectorAll(selector);
-    var instance; // Utils
+    // const elements = document.querySelectorAll(selector);
+    var instance;
+    var overlay;
+    var video;
+    var videoControls; // Utils
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
@@ -103,17 +106,13 @@
     // Click handler
 
 
-    var clickHandler = function clickHandler(event, element) {
+    var clickHandler = function clickHandler(event) {
       event.preventDefault();
-      playVideo(element);
+      playVideo();
     }; // const playVideo = function(element) {
 
 
     var playVideo = function playVideo() {
-      var element = instance;
-      var overlay = element.overlay;
-      var video = element.video;
-      var videoControls = element.videoControls;
       var transitionDuration = getTransitionDuration(overlay);
       var embedTransitionDuration = transitionDuration <= embedPreload ? 0 : transitionDuration - embedPreload;
       var videoType = video.nodeName === 'VIDEO' ? 'video' : 'embed';
@@ -140,37 +139,39 @@
         overlay.classList.add(inactiveClass);
         overlay.style.display = 'none';
       }, transitionDuration);
+    }; // Setup properties of the instance
+
+
+    var setup = function setup() {
+      // instance = document.querySelector(selector);
+      overlay = instance.querySelector(overlaySelector);
+      video = instance.querySelector(videoSelector);
+      if (overlay === null || video === null) return;
+      video.setAttribute('aria-hidden', true);
+      video.setAttribute('tabindex', -1);
+      videoControls = video.getAttribute('controls') === '';
+      if (videoControls) video.removeAttribute('controls'); // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
+      // overlay.addEventListener('click', (event) => clickHandler(event, item));
+
+      overlay.addEventListener('click', function (event) {
+        return clickHandler(event);
+      });
     }; // Init
 
 
     var init = function init() {
-      elements.forEach(function (item) {
-        instance = item;
-        var overlay = item.querySelector(overlaySelector);
-        var video = item.querySelector(videoSelector);
-        if (overlay === null || video === null) return;
-        video.setAttribute('aria-hidden', true);
-        video.setAttribute('tabindex', -1);
-        var videoControls = video.getAttribute('controls') === '';
-        if (videoControls) video.removeAttribute('controls'); // console.log(video.getAttribute('srcdoc') !== null);
-
-        item.overlay = overlay;
-        item.video = video;
-        item.videoControls = videoControls; // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
-        // overlay.addEventListener('click', (event) => clickHandler(event, item));
-
-        overlay.addEventListener('click', function (event) {
-          return clickHandler(event);
-        });
-      });
+      // NIGEL TO DO - Loop and call parent function if its multiple and pass node. then make setup function only accept node.
+      // elements.forEach(function(item) {
+      instance = typeof selector === 'string' ? document.querySelector(selector) : selector;
+      console.log(instance, document.querySelectorAll(selector).length);
+      if (instance === null) return;
+      setup();
     }; // Self initiate
+    // if (elements.length) {
 
 
-    if (elements.length) {
-      init();
-    }
-
-    ; // Reveal API
+    init(); // };
+    // Reveal API
 
     return {
       init: init,

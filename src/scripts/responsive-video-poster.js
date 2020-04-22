@@ -33,6 +33,7 @@ const ResponsiveVideoPoster = function({
 
 	// Utils
 	const getTransitionDuration = function (element) {
+    console.log('transition element ' + element);
 		let transitionDuration = getComputedStyle(element)['transitionDuration'];
 		let transitionDurationNumber = parseFloat(transitionDuration);
 		transitionDuration = transitionDuration.indexOf('ms')>-1 ? transitionDurationNumber : transitionDurationNumber*1000;
@@ -52,45 +53,6 @@ const ResponsiveVideoPoster = function({
 
     item.dispatchEvent(event);
   };
-
-
-
-  // // Click handler
-  // const clickHandler = function(event, overlay, video, videoControls) {
-  //   event.preventDefault();
-    
-  //   let transitionDuration = getTransitionDuration(overlay);
-  //   let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
-  //   let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
-
-	// 	overlay.classList.add(animClass);
-
-  //   video.setAttribute('aria-hidden', false);
-  //   video.setAttribute('tabindex', 0);
-  //   video.focus();
-
-  //   if(videoType === 'video') {
-  //     video.setAttribute('preload', 'auto');
-
-  //     setTimeout(() => {
-  //       video.play();
-  //       if(videoControls) video.setAttribute('controls', '');
-  //     }, transitionDuration);
-  //   }
-  //   else {
-  //     setTimeout(() => {
-  //       if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
-  //       video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
-  //     }, embedTransitionDuration);
-  //   }
-
-	// 	setTimeout(() => {
-	// 		overlay.classList.remove(animClass);
-	// 		overlay.classList.add(inactiveClass);
-  //     overlay.style.display = 'none';
-	// 	}, transitionDuration);
-    
-  // }
 
 
 
@@ -140,11 +102,13 @@ const ResponsiveVideoPoster = function({
 
   // Setup properties of the instance
   const setup = function() {
+    console.log('setup ' + instance);
 
-    // instance = document.querySelector(selector);
     overlay = instance.querySelector(overlaySelector);
     video = instance.querySelector(videoSelector);
     if(overlay === null || video === null) return;
+
+    console.log(overlay, video);
 
     video.setAttribute('aria-hidden', true);
     video.setAttribute('tabindex', -1);
@@ -161,31 +125,49 @@ const ResponsiveVideoPoster = function({
 
 
   // Init
-  const init = function() {
-
-    // NIGEL TO DO - Loop and call parent function if its multiple and pass node. then make setup function only accept node.
+  const init = function() {    
     
-    // elements.forEach(function(item) {
+    // Attempt to loop elements to init but it does'nt retain state
+
+    // if(typeof selector === 'string') {
+    //   let elements = document.querySelectorAll(selector);
+
+    //   if(elements.length) {
+
+    //     for (const item of elements) {
+    //       console.log(item);
+    //       // console.log(item.constructor.name);
+    //       instance = item;
+    //       ResponsiveVideoPoster({ selector: item });
+    //     }
+
+    //   }
+    //   else {
+    //     console.log('first return');
+    //     return;
+    //   }
+
+    // }
+
+
+    // instance = document.querySelector(selector);
+    // if (instance === null) return;
+    // console.log(instance.constructor.name);
+    // setup();
+
+
 
     instance = (typeof selector === 'string') ? document.querySelector(selector) : selector;
-
-    console.log(instance, document.querySelectorAll(selector).length);
     if (instance === null) return;
-
     setup();
 
-
-
-    
-    
   };
 
 
 
   // Self initiate
-  // if (elements.length) {
-		init();
-	// };
+	init();
+
 
   // Reveal API
   return {
