@@ -6,7 +6,6 @@
   @param {Object} object - Container for all options.
     @param {string} selector - Container element selector.
     @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
-    @param {string} posterSelector - Image element to be used as the poster.
     @param {string} videoSelector - Video element.
     @param {string} animClass - CSS class to transition the video overlay between states.
     @param {string} inactiveClass - CSS class to hide the video overlay.
@@ -16,7 +15,6 @@
 const ResponsiveVideoPoster = function({
   selector: selector = '.responsive-video-poster',
   overlaySelector: overlaySelector = '.video-overlay',
-  posterSelector: posterSelector = '.poster',
   videoSelector: videoSelector = '.video',
   animClass: animClass = 'is-anim',
   inactiveClass: inactiveClass = 'is-inactive',
@@ -33,7 +31,6 @@ const ResponsiveVideoPoster = function({
 
 	// Utils
 	const getTransitionDuration = function (element) {
-    console.log('transition element ' + element);
 		let transitionDuration = getComputedStyle(element)['transitionDuration'];
 		let transitionDurationNumber = parseFloat(transitionDuration);
 		transitionDuration = transitionDuration.indexOf('ms')>-1 ? transitionDurationNumber : transitionDurationNumber*1000;
@@ -45,26 +42,26 @@ const ResponsiveVideoPoster = function({
     return url;
   };
   
-  const fireEvent = (item, eventName, eventDetail) => {
+  const fireEvent = (element, eventName, eventDetail) => {
     const event = new CustomEvent(eventName, {
       bubbles: false,
       detail: eventDetail,
     });
 
-    item.dispatchEvent(event);
+    element.dispatchEvent(event);
   };
 
 
 
-  // Click handler
   const clickHandler = function(event) {
     event.preventDefault();
     playVideo();
   }  
   
 
-  // const playVideo = function(element) {
   const playVideo = function() {
+
+    fireEvent(instance, 'playVideo', { action: 'start' });
     
     let transitionDuration = getTransitionDuration(overlay);
     let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
@@ -92,6 +89,8 @@ const ResponsiveVideoPoster = function({
     }
 
 		setTimeout(() => {
+      fireEvent(instance, 'playVideo', { action: 'end' });
+
 			overlay.classList.remove(animClass);
 			overlay.classList.add(inactiveClass);
       overlay.style.display = 'none';
@@ -102,13 +101,9 @@ const ResponsiveVideoPoster = function({
 
   // Setup properties of the instance
   const setup = function() {
-    console.log('setup ' + instance);
-
     overlay = instance.querySelector(overlaySelector);
     video = instance.querySelector(videoSelector);
     if(overlay === null || video === null) return;
-
-    console.log(overlay, video);
 
     video.setAttribute('aria-hidden', true);
     video.setAttribute('tabindex', -1);
@@ -116,11 +111,7 @@ const ResponsiveVideoPoster = function({
     videoControls = (video.getAttribute('controls') === '');
     if(videoControls) video.removeAttribute('controls');
 
-    // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
-
-    // overlay.addEventListener('click', (event) => clickHandler(event, item));
     overlay.addEventListener('click', (event) => clickHandler(event));
-    
   };
 
 
@@ -136,26 +127,16 @@ const ResponsiveVideoPoster = function({
 
     //     for (const item of elements) {
     //       console.log(item);
-    //       // console.log(item.constructor.name);
     //       instance = item;
     //       ResponsiveVideoPoster({ selector: item });
     //     }
 
     //   }
     //   else {
-    //     console.log('first return');
     //     return;
     //   }
 
     // }
-
-
-    // instance = document.querySelector(selector);
-    // if (instance === null) return;
-    // console.log(instance.constructor.name);
-    // setup();
-
-
 
     instance = (typeof selector === 'string') ? document.querySelector(selector) : selector;
     if (instance === null) return;
