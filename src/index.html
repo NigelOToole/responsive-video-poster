@@ -28,11 +28,15 @@
 
     <div class="fullwidth">
       <div class="container separator">
-        <h2 class="m-0">A JavaScript plugin to use a responsive image as the poster image for a video. This is better for performance and allows for styling control of video placeholders.</h2>
-        <p>The poster attribute of the video element only allows specifying one image which is not optimal for performance as a large image will need to be specified to suit all screens. This plugin uses a standard image tag(img or picture) as the poster img so a src-set can be specified. This means only the most appropriate image for the current screen will be loaded. The examples below also include more performance optimizations for loading of both native and embedded videos.</p>
-        srcdoc: https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g
-        covverr videos: https://coverr.co/videos/lago-di-braies-y1yBShzUTZ, https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG
-        youtube video
+        <h2>Use a responsive image as the poster for a video, which is better for performance and gives full control of video placeholders.</h2>
+
+        <p>
+          Video elements only allow specifying one image as the poster, which is not optimal for performance.<br> 
+          This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image.<br>
+          This also gives full styling control of video placeholders.<br>
+          Performance optimizations are also included for loading of both native and embedded videos.
+        </p>
+        
       </div>
     </div>
 
@@ -48,15 +52,28 @@
 
           <div class="col-md-8">
             
-            <div class="responsive-video-poster embed-responsive embed-responsive-16by9" id="responsive-video-poster--demo-default">
+            <!-- <div class="responsive-video-poster embed-responsive embed-responsive-16by9" id="responsive-video-poster--demo-default">
                 
               <button class="video-overlay embed-responsive-item" aria-label="Play video">
+                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
+
+                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster img-fluid" alt="Lake Braies, Italy">
+              </button>
+
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
+
+            </div> -->
+
+            
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-default">
+                
+              <button class="video-overlay" aria-label="Play video">
                 <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
               </button>
 
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video" controls></video>
 
             </div>
 
@@ -79,9 +96,9 @@
 
           <div class="col-md-8">
             
-            <div class="responsive-video-poster embed-responsive embed-responsive-16by9" id="responsive-video-poster--demo-picture">
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-picture">
                 
-              <button class="video-overlay embed-responsive-item" aria-label="Play video">
+              <button class="video-overlay" aria-label="Play video">
                 <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <picture>
@@ -91,7 +108,7 @@
                 </picture>
               </button>
 
-              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
+              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" class="video" controls></video>
 
             </div>
 
@@ -117,15 +134,15 @@
 
           <div class="col-md-8">
             
-            <div class="responsive-video-poster embed-responsive embed-responsive-16by9" id="responsive-video-poster--demo-iframe">
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-iframe">
                 
-              <button class="video-overlay embed-responsive-item" aria-label="Play video">
+              <button class="video-overlay" aria-label="Play video">
                 <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
                 <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
               </button>
 
-              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4" srcdoc="" class="video" title="Drone Grand Tour footage of the Tustan Karpaty mountains"></iframe>
+              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4?rel=0" srcdoc="" class="video" title="Drone Grand Tour footage of the Tustan Karpaty mountains"></iframe>
             </div>
 
           </div>
@@ -162,71 +179,6 @@
     </div> -->
 
 
-    <!-- <div class="fullwidth">
-      <div class="container separator">
-        <h3 class="">Rotate</h3>
-
-        <div class="responsive-video-poster responsive-video-poster--3-grid responsive-video-poster--demo-rotate">
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-1.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-2.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-3.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-4.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-5.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-          <a href="#" class="responsive-video-poster__card">
-            <img src="images/mountain-6.jpg" alt="Image" class="responsive-video-poster__img">
-
-            <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-              <h3 class="responsive-video-poster__title">Lorem ipsum</h3>
-              <p class="responsive-video-poster__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore eritatis et quasi.</p>
-            </div>
-          </a>
-
-        </div>
-
-      </div>
-    </div> -->
-
 
 
     <div class="fullwidth">
@@ -249,20 +201,29 @@
 
           <p>The script is an ES6(ES2015) module but the compiled version is included in the build as "src/scripts/responsive-video-poster-umd.js". You can also copy "src/scripts/responsive-video-poster.js" into your own site if your build process can accommodate ES6 modules.</p>
 
-<pre><code>import DirectionReveal from 'responsive-video-poster';
+<pre><code>import ResponsiveVideoPoster from 'responsive-video-poster.js';;
 
-// Init with default setup
-const directionRevealDemo = DirectionReveal();
+// Init with string - default setup for one instance
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-default' });
+
+
+// Init by loop - this wont allow access to methods
+const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
+
+for (const item of responsiveVideoPosterElements) {
+  ResponsiveVideoPoster({ selector: item });
+}
+
 
 // Init with all options at default setting
-const directionRevealDefault = DirectionReveal({
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   selector: '.responsive-video-poster',
-  itemSelector: '.responsive-video-poster__card',
-  animationName: 'swing',
-  animationPostfixEnter: 'enter',
-  animationPostfixLeave: 'leave',
-  enableTouch: true,
-  touchThreshold: 250
+  overlaySelector: '.video-overlay',
+  posterSelector: '.poster',
+  videoSelector: '.video',
+  animClass: 'is-anim',
+  inactiveClass: 'is-inactive',
+  embedPreload: 500
 });
 </code></pre>
 
@@ -283,40 +244,40 @@ const directionRevealDefault = DirectionReveal({
             <td>Container element selector.</td>
           </tr>
           <tr>
-            <td><code>itemSelector</code></td>
-            <td>'.responsive-video-poster__card'</td>
+            <td><code>overlaySelector</code></td>
+            <td>'.video-overlay'</td>
             <td>String</td>
-            <td>Item element selector.</td>
+            <td>Overlay element selector.</td>
           </tr>
           <tr>
-            <td><code>animationName</code></td>
-            <td>'swing'</td>
+            <td><code>posterSelector</code></td>
+            <td>'.poster'</td>
             <td>String</td>
-            <td>Animation class.</td>
+            <td>Poster element selector.</td>
           </tr>
           <tr>
-            <td><code>animationPostfixEnter</code></td>
-            <td>'enter'</td>
+            <td><code>videoSelector</code></td>
+            <td>'.video'</td>
             <td>String</td>
-            <td>Animation CSS class postfix for enter event.</td>
+            <td>Video element selector.</td>
           </tr>
           <tr>
-            <td><code>animationPostfixLeave</code></td>
-            <td>'leave'</td>
+            <td><code>animClass</code></td>
+            <td>'is-anim'</td>
             <td>String</td>
-            <td>Animation CSS class postfix for leave event.</td>
+            <td>CSS class to transition the video overlay between states.</td>
           </tr>
           <tr>
-            <td><code>enableTouch</code></td>
-            <td>true</td>
-            <td>Boolean</td>
-            <td>Adds touch event to show content on first click then follow link on the second click.</td>
+            <td><code>inactiveClass</code></td>
+            <td>'is-inactive'</td>
+            <td>String</td>
+            <td>CSS class to hide the video overlay.</td>
           </tr>
           <tr>
-            <td><code>touchThreshold</code></td>
-            <td>250</td>
-            <td>Number(ms)</td>
-            <td>The touch length in ms to trigger the reveal, this is to prevent triggering if user is scrolling.</td>
+            <td><code>embedPreload</code></td>
+            <td>500</td>
+            <td>Integer(ms)</td>
+            <td>Amount of time given to preload an embedded video.</td>
           </tr>
         </table>
         </div>
@@ -329,47 +290,60 @@ const directionRevealDefault = DirectionReveal({
 
 
 
-<p>This demo uses the "embed-responsive" classes from Bootstrap but any similar pattern can be used to main the image and video responsive.</p>
+<!-- <p>This demo uses the "embed-responsive" classes from Bootstrap but any similar pattern can be used to main the image and video responsive.</p> -->
 
 
 
 
         <h3>Markup</h3>
 
-<pre><code>&lt;div class="responsive-video-poster"&gt;
+<pre><code>&lt;div class="responsive-video-poster responsive-video-poster--16by9"&gt;
+                
+  &lt;button class="video-overlay" aria-label="Play video"&gt;
+    &lt;div class="poster-btn"&gt;&lt;span class="poster-btn-icon"&gt;▶&lt;/span&gt;&lt;/div&gt;
 
-  &lt;a href="#" class="responsive-video-poster__card"&gt;
-    &lt;img src="images/image.jpg" class="responsive-video-poster__img"&gt;
+    &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster"&gt;
+  &lt;/button&gt;
 
-    &lt;div class="responsive-video-poster__overlay responsive-video-poster__anim--enter"&gt;
-      &lt;h3 class="responsive-video-poster__title"&gt;Title&lt;/h3&gt;
-      &lt;p class="responsive-video-poster__text"&gt;Description text.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-
-  ...
+  &lt;video src="videos/video.mp4" preload="metadata" class="video" controls&gt;&lt;/video&gt;
 
 &lt;/div&gt;
+
 </code></pre>
 
 
-          <h3>Using other tags</h3>
+          <h3>Bootstrap Example</h3>
 
-          <p>The demos use &lt;a&gt; tags for the "responsive-video-poster__card" but &lt;div&gt; tags can be used as below, specifying the tabindex ensures keyboard navigation works as expected. They can all have a value of 0 and will follow the source order of the divs.</p>
+          <p>If you are using Bootstrap you can use built in classes.</p>
 
-<pre><code>&lt;div class="responsive-video-poster__card" tabindex="0"&gt;
-  ...
+<pre><code>&lt;div class="responsive-video-poster embed-responsive embed-responsive-16by9"&gt;
+                
+  &lt;button class="video-overlay embed-responsive-item" aria-label="Play video"&gt;
+    &lt;div class="poster-btn"&gt;&lt;span class="poster-btn-icon"&gt;▶&lt;/span&gt;&lt;/div&gt;
+
+    &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster  img-fluid"&gt;
+  &lt;/button&gt;
+
+  &lt;video src="videos/video.mp4" preload="metadata" class="video embed-responsive-item" controls&gt;&lt;/video&gt;
+
 &lt;/div&gt;
+
 </code></pre>
 
 
-          <h3>Inverted animations</h3>
+          <h3>Aspect Ratio</h3>
 
-          <p>Most of the animations above can be inverted so the overlay is visible by default and animates out on hover. Change the class 'responsive-video-poster__anim--enter' to 'responsive-video-poster__anim--leave' for this effect.</p>
+          <p>The demos makes use of the padding technique to maintain aspect ratio. Only one aspect ratio of 16:9 is used in the demos. You can add your own or use classes provide by frameworks such as Bootstrap.</p>
 
-          <p>You can also add the class 'responsive-video-poster__anim--enter' or 'responsive-video-poster__anim--leave' to the image to animate it at the same time as overlay. This effect can be seen in the Slide & Push demo.</p>
+
+
+          <h3>Video loading optimizations</h3>
+
+          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload set to metadata and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">empty srcdoc</a> attribute so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embed preload. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
 
         </div>
+
+
 
         <div class="subsection">
           <h2>Events</h2>
@@ -406,7 +380,8 @@ $ gulp serve
 
         <div class="subsection">
           <h3>Credits</h3>
-          <p class="m-0">Inspired by a Codepen by <a href="https://codepen.io/noeldelgado/pen/pGwFx" target="_blank" rel="noopener">Noel Delgado</a>, this <a href="https://stackoverflow.com/a/3647634" target="_blank" rel="noopener">Stack overflow answer</a>, the article <a href="https://www.kirupa.com/html5/get_element_position_using_javascript.htm" target="_blank" rel="noopener">Get an Element's position using javascript</a> and <br><a href="https://unsplash.com" target="_blank" rel="noopener">images from Unsplash.</a></p>
+          Covverr videos of <a href="https://coverr.co/videos/lago-di-braies-y1yBShzUTZ" target="_blank" rel="noopener">Lago di braies</a> and <a href="https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG" target="_blank" rel="noopener">Lofoten rocks</a>. Youtube video of <a href="https://www.youtube.com/watch?v=FjPvaGt6Pw4" target="_blank" rel="noopener">Tustan Karpaty mountains</a>.<br>
+          <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">Lazy loading of an embedded video</a> by Arthur Corenzan. 
         </div>
 
       </div>
@@ -415,7 +390,7 @@ $ gulp serve
 
     <footer class="fullwidth fullwidth--sm footer">
       <div class="container">
-        Made by Nigel O Toole <a href="http://www.purestructure.com" target="_blank" rel="noopener">pure structure</a>
+        Made by Nigel O Toole - <a href="http://www.purestructure.com" target="_blank" rel="noopener">pure structure</a>
       </div>
     </footer>
 

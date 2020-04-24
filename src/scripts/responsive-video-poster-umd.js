@@ -26,7 +26,6 @@
     @param {Object} object - Container for all options.
       @param {string} selector - Container element selector.
       @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
-      @param {string} posterSelector - Image element to be used as the poster.
       @param {string} videoSelector - Video element.
       @param {string} animClass - CSS class to transition the video overlay between states.
       @param {string} inactiveClass - CSS class to hide the video overlay.
@@ -38,8 +37,6 @@
         selector = _ref$selector === void 0 ? '.responsive-video-poster' : _ref$selector,
         _ref$overlaySelector = _ref.overlaySelector,
         overlaySelector = _ref$overlaySelector === void 0 ? '.video-overlay' : _ref$overlaySelector,
-        _ref$posterSelector = _ref.posterSelector,
-        posterSelector = _ref$posterSelector === void 0 ? '.poster' : _ref$posterSelector,
         _ref$videoSelector = _ref.videoSelector,
         videoSelector = _ref$videoSelector === void 0 ? '.video' : _ref$videoSelector,
         _ref$animClass = _ref.animClass,
@@ -68,51 +65,23 @@
       return url;
     };
 
-    var fireEvent = function fireEvent(item, eventName, eventDetail) {
+    var fireEvent = function fireEvent(element, eventName, eventDetail) {
       var event = new CustomEvent(eventName, {
         bubbles: false,
         detail: eventDetail
       });
-      item.dispatchEvent(event);
-    }; // // Click handler
-    // const clickHandler = function(event, overlay, video, videoControls) {
-    //   event.preventDefault();
-    //   let transitionDuration = getTransitionDuration(overlay);
-    //   let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
-    //   let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
-    // 	overlay.classList.add(animClass);
-    //   video.setAttribute('aria-hidden', false);
-    //   video.setAttribute('tabindex', 0);
-    //   video.focus();
-    //   if(videoType === 'video') {
-    //     video.setAttribute('preload', 'auto');
-    //     setTimeout(() => {
-    //       video.play();
-    //       if(videoControls) video.setAttribute('controls', '');
-    //     }, transitionDuration);
-    //   }
-    //   else {
-    //     setTimeout(() => {
-    //       if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
-    //       video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
-    //     }, embedTransitionDuration);
-    //   }
-    // 	setTimeout(() => {
-    // 		overlay.classList.remove(animClass);
-    // 		overlay.classList.add(inactiveClass);
-    //     overlay.style.display = 'none';
-    // 	}, transitionDuration);
-    // }
-    // Click handler
-
+      element.dispatchEvent(event);
+    };
 
     var clickHandler = function clickHandler(event) {
       event.preventDefault();
       playVideo();
-    }; // const playVideo = function(element) {
-
+    };
 
     var playVideo = function playVideo() {
+      fireEvent(instance, 'playVideo', {
+        action: 'start'
+      });
       var transitionDuration = getTransitionDuration(overlay);
       var embedTransitionDuration = transitionDuration <= embedPreload ? 0 : transitionDuration - embedPreload;
       var videoType = video.nodeName === 'VIDEO' ? 'video' : 'embed';
@@ -135,6 +104,9 @@
       }
 
       setTimeout(function () {
+        fireEvent(instance, 'playVideo', {
+          action: 'end'
+        });
         overlay.classList.remove(animClass);
         overlay.classList.add(inactiveClass);
         overlay.style.display = 'none';
@@ -143,16 +115,13 @@
 
 
     var setup = function setup() {
-      // instance = document.querySelector(selector);
       overlay = instance.querySelector(overlaySelector);
       video = instance.querySelector(videoSelector);
       if (overlay === null || video === null) return;
       video.setAttribute('aria-hidden', true);
       video.setAttribute('tabindex', -1);
       videoControls = video.getAttribute('controls') === '';
-      if (videoControls) video.removeAttribute('controls'); // overlay.addEventListener('click', (event) => clickHandler(event, overlay, video, videoControls));
-      // overlay.addEventListener('click', (event) => clickHandler(event, item));
-
+      if (videoControls) video.removeAttribute('controls');
       overlay.addEventListener('click', function (event) {
         return clickHandler(event);
       });
@@ -160,18 +129,27 @@
 
 
     var init = function init() {
-      // NIGEL TO DO - Loop and call parent function if its multiple and pass node. then make setup function only accept node.
-      // elements.forEach(function(item) {
+      // Attempt to loop elements to init but it does'nt retain state
+      // if(typeof selector === 'string') {
+      //   let elements = document.querySelectorAll(selector);
+      //   if(elements.length) {
+      //     for (const item of elements) {
+      //       console.log(item);
+      //       instance = item;
+      //       ResponsiveVideoPoster({ selector: item });
+      //     }
+      //   }
+      //   else {
+      //     return;
+      //   }
+      // }
       instance = typeof selector === 'string' ? document.querySelector(selector) : selector;
-      console.log(instance, document.querySelectorAll(selector).length);
       if (instance === null) return;
       setup();
     }; // Self initiate
-    // if (elements.length) {
 
 
-    init(); // };
-    // Reveal API
+    init(); // Reveal API
 
     return {
       init: init,

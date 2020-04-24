@@ -1,12 +1,11 @@
-// Use an img or picture element as the poster image for a video since the poster does not support src-set. This allows you to specify multiple image sizes which is better for performance. It adds an stylable overlay to the image which starts the video.
-
 /**
   Responsive images for Video posters
 
   @param {Object} object - Container for all options.
     @param {string} selector - Container element selector.
-    @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
-    @param {string} videoSelector - Video element.
+    @param {string} overlaySelector - Overlay element selector.
+    @param {string} posterSelector - Poster element selector.
+    @param {string} videoSelector - Video element selector.
     @param {string} animClass - CSS class to transition the video overlay between states.
     @param {string} inactiveClass - CSS class to hide the video overlay.
     @param {integer} embedPreload - Amount of time given to preload an embedded video.
@@ -15,6 +14,7 @@
 const ResponsiveVideoPoster = function({
   selector: selector = '.responsive-video-poster',
   overlaySelector: overlaySelector = '.video-overlay',
+  posterSelector: posterSelector = '.poster',
   videoSelector: videoSelector = '.video',
   animClass: animClass = 'is-anim',
   inactiveClass: inactiveClass = 'is-inactive',
@@ -22,11 +22,12 @@ const ResponsiveVideoPoster = function({
 	} = {}) {
 
   // Options
-  // const elements = document.querySelectorAll(selector);
-  let instance;
+  let element;
   let overlay;
+  let poster;
   let video;
   let videoControls;
+
 
 
 	// Utils
@@ -53,6 +54,7 @@ const ResponsiveVideoPoster = function({
 
 
 
+  // Methods
   const clickHandler = function(event) {
     event.preventDefault();
     playVideo();
@@ -61,7 +63,7 @@ const ResponsiveVideoPoster = function({
 
   const playVideo = function() {
 
-    fireEvent(instance, 'playVideo', { action: 'start' });
+    fireEvent(element, 'playVideo', { action: 'start' });
     
     let transitionDuration = getTransitionDuration(overlay);
     let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
@@ -89,7 +91,7 @@ const ResponsiveVideoPoster = function({
     }
 
 		setTimeout(() => {
-      fireEvent(instance, 'playVideo', { action: 'end' });
+      fireEvent(element, 'playVideo', { action: 'end' });
 
 			overlay.classList.remove(animClass);
 			overlay.classList.add(inactiveClass);
@@ -99,15 +101,17 @@ const ResponsiveVideoPoster = function({
   }
 
 
-  // Setup properties of the instance
+  // Setup properties of the element
   const setup = function() {
-    overlay = instance.querySelector(overlaySelector);
-    video = instance.querySelector(videoSelector);
+    overlay = element.querySelector(overlaySelector);
+    video = element.querySelector(videoSelector);
+    poster = element.querySelector(posterSelector);
     if(overlay === null || video === null) return;
 
     video.setAttribute('aria-hidden', true);
     video.setAttribute('tabindex', -1);
 
+    // Video controls are hidden so the transition between the poster and video is seamless
     videoControls = (video.getAttribute('controls') === '');
     if(videoControls) video.removeAttribute('controls');
 
@@ -118,28 +122,9 @@ const ResponsiveVideoPoster = function({
   // Init
   const init = function() {    
     
-    // Attempt to loop elements to init but it does'nt retain state
+    element = (typeof selector === 'string') ? document.querySelector(selector) : selector;
+    if (element === null) return;
 
-    // if(typeof selector === 'string') {
-    //   let elements = document.querySelectorAll(selector);
-
-    //   if(elements.length) {
-
-    //     for (const item of elements) {
-    //       console.log(item);
-    //       instance = item;
-    //       ResponsiveVideoPoster({ selector: item });
-    //     }
-
-    //   }
-    //   else {
-    //     return;
-    //   }
-
-    // }
-
-    instance = (typeof selector === 'string') ? document.querySelector(selector) : selector;
-    if (instance === null) return;
     setup();
 
   };
@@ -150,10 +135,20 @@ const ResponsiveVideoPoster = function({
 	init();
 
 
+  const getInfo = () => {
+    return {
+      element,
+      overlay,
+      poster,
+      video
+    };
+  };
+
   // Reveal API
   return {
     init,
-    playVideo
+    playVideo,
+    getInfo
   };
 
 };

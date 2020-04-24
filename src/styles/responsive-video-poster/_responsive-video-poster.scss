@@ -1,21 +1,38 @@
 .responsive-video-poster {
   position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+
+  &::before {
+    display: block;
+    content: "";
+  }
 }
 
-  .video-overlay {
+.responsive-video-poster--16by9::before {
+  padding-top: 56.25%;
+}
+
+
+  .video-overlay, .video {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 40;
     width: 100%;
     height: 100%;
+    border: 0;
+  }
+
+  .video-overlay {
+    z-index: 40;
     cursor: pointer;
     transition: all .3s ease-in;
 
     // Reset default button styles
     padding: 0;
     background: none;
-    border: none;
 
     &.is-anim {
       opacity: 0;
@@ -34,7 +51,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 30;
-      padding: 8px;
+      padding: 16px;
       font-size: 4rem;
       line-height: .9;
       color: #fff;
@@ -55,11 +72,10 @@
         text-indent: .1em;
       }
 
+
   .poster {
     position: relative;
     z-index: 20;
-
-    // If not using bootstrap
     max-width: 100%;
     height: auto;
   }
@@ -68,6 +84,9 @@
   .poster--cover, .poster--contain {
     width: 100%;
     height: 100%;
+  }
+
+  .poster--cover {
     object-fit: cover;
   }
 
@@ -75,11 +94,9 @@
     object-fit: contain;
   }
 
+
   .video {
     z-index: 10;
-  }
-
-  iframe.video {
     background-color: #000;
   }
   
