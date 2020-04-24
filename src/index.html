@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Responsive Video Poster - Responsive poster image for the video element</title>
+    <title>Responsive Video Poster - Responsive poster image for a video</title>
 
     <link rel="stylesheet" href="styles/site.css">
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono|Open+Sans:300,400&display=swap"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono|Open+Sans:300,400&display=swap">
 
     <link rel="stylesheet" href="styles/responsive-video-poster.css">
   </head>
@@ -28,12 +28,12 @@
 
     <div class="fullwidth">
       <div class="container separator">
-        <h2>Use a responsive image as the poster for a video, which is better for performance and gives full control of video placeholders.</h2>
+        <h2>Responsive poster image for a video, which is better for performance and gives full control of video placeholders.</h2>
 
         <p>
-          Video elements only allow specifying one image as the poster, which is not optimal for performance.<br> 
-          This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image.<br>
-          This also gives full styling control of video placeholders.<br>
+          Video elements only allow specifying one image as the poster, which is not optimal for performance. 
+          This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. 
+          This also gives full styling control of video placeholders.
           Performance optimizations are also included for loading of both native and embedded videos.
         </p>
         
@@ -51,24 +51,13 @@
           </div>
 
           <div class="col-md-8">
-            
-            <!-- <div class="responsive-video-poster embed-responsive embed-responsive-16by9" id="responsive-video-poster--demo-default">
-                
-              <button class="video-overlay embed-responsive-item" aria-label="Play video">
-                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
 
-                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster img-fluid" alt="Lake Braies, Italy">
-              </button>
-
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
-
-            </div> -->
-
-            
             <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-default">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
+                <div class="poster-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
 
                 <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
               </button>
@@ -99,7 +88,9 @@
             <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-picture">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
+                <div class="poster-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
 
                 <picture>
                   <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.webp 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.webp 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/webp">
@@ -137,7 +128,9 @@
             <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-iframe">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn"><span class="poster-btn-icon">▶</span></div>
+                <div class="poster-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
 
                 <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
               </button>
@@ -151,33 +144,6 @@
 
       </div>
     </div>
-  
-
-
-    <!-- <div class="fullwidth">
-      <div class="container separator">
-
-        <h3>Different style for poster overlay</h3>
-
-        <div class="row">
-          <div class="col-sm-8">
-
-            <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
-                
-                <button class="poster-overlay embed-responsive-item" aria-label="Play video">
-                  <img src="images/mountain-1.jpg" class="poster poster--cover">
-                </button>
-
-              <video src="videos/coverr-lofoten-rocks-1576261169444.mp4" preload="metadata" controls class="video embed-responsive-item"></video>
-            </div>
-
-          </div>
-        </div>
-
-
-      </div>
-    </div> -->
-
 
 
 
@@ -297,6 +263,8 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 
         <h3>Markup</h3>
 
+        <p>The demos makes use of the padding technique to maintain aspect ratio. Only one aspect ratio of 16:9 is used in the demos. You can add your own or use classes provide by frameworks such as Bootstrap.</p>
+
 <pre><code>&lt;div class="responsive-video-poster responsive-video-poster--16by9"&gt;
                 
   &lt;button class="video-overlay" aria-label="Play video"&gt;
@@ -308,64 +276,50 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   &lt;video src="videos/video.mp4" preload="metadata" class="video" controls&gt;&lt;/video&gt;
 
 &lt;/div&gt;
-
 </code></pre>
 
 
           <h3>Bootstrap Example</h3>
-
-          <p>If you are using Bootstrap you can use built in classes.</p>
 
 <pre><code>&lt;div class="responsive-video-poster embed-responsive embed-responsive-16by9"&gt;
                 
   &lt;button class="video-overlay embed-responsive-item" aria-label="Play video"&gt;
     &lt;div class="poster-btn"&gt;&lt;span class="poster-btn-icon"&gt;▶&lt;/span&gt;&lt;/div&gt;
 
-    &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster  img-fluid"&gt;
+    &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster img-fluid"&gt;
   &lt;/button&gt;
 
   &lt;video src="videos/video.mp4" preload="metadata" class="video embed-responsive-item" controls&gt;&lt;/video&gt;
 
 &lt;/div&gt;
-
 </code></pre>
-
-
-          <h3>Aspect Ratio</h3>
-
-          <p>The demos makes use of the padding technique to maintain aspect ratio. Only one aspect ratio of 16:9 is used in the demos. You can add your own or use classes provide by frameworks such as Bootstrap.</p>
-
-
-
-          <h3>Video loading optimizations</h3>
-
-          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload set to metadata and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">empty srcdoc</a> attribute so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embed preload. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
 
         </div>
 
+
+        <div class="subsection">
+          <h2>Video loading optimizations</h2>
+
+          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload="metadata" and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">srcdoc=""</a> so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
+        </div>
 
 
         <div class="subsection">
           <h2>Events</h2>
 
-          <p>A 'directionChange' event is broadcast once a user enters/leaves an item with information about the action(enter,leave) and direction(top, right, bottom, left).</p>
+          <p>A 'playVideo' event is started once a user clicks the video overlay. The event is ended once the overlay has become inactive and the video starts playing.</p>
 
-<pre><code>document.querySelector('#test').addEventListener('directionChange', (event) => { 
-  console.log(`Action: ${event.detail.action} Direction: ${event.detail.direction}`);
+<pre><code>document.querySelector('#responsive-video-poster--demo-default').addEventListener('playVideo', (event) => { 
+  console.log(`Action: ${event.detail.action}`);
 });
 </code></pre>
         </div>
 
+
         <div class="subsection">
           <h2>Compatibility</h2>
 
-          <h3>Touch support</h3>
-
-          <p>The plugin will detect touch support and reveal the hidden content on first click then follow link on the second click. This can be disabled with the option enableTouch.</p>
-
-          <h3>Browser support</h3>
-
-          <p>Supports all modern browsers(Firefox, Chrome and Edge) released as of January 2018. For older browsers you may need to include polyfills for <a href="https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach" target="_blank" rel="noopener">Nodelist.forEach</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList" target="_blank" rel="noopener">Element.classList</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">Passive Event Listeners</a>.</p>
+          <p>Supports all modern browsers(Firefox, Chrome, Safari and Edge) released as of April 2020.</p>
         </div>
 
         <div class="subsection">

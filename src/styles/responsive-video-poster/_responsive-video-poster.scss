@@ -17,7 +17,7 @@
 
 
   .video-overlay, .video {
-    position: absolute;
+    position: absolute; 
     top: 0;
     left: 0;
     width: 100%;
@@ -51,14 +51,14 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 30;
-      padding: 16px;
-      font-size: 4rem;
-      line-height: .9;
+      padding: .5em;
+      font-size: 2rem;
+      line-height: .8;
       color: #fff;
       border-radius: 50%;
       background: #000;
       opacity: .8;
-      transition: all .3s;
+      transition: all .3s; 
 
       .video-overlay:hover & {
         opacity: 1;
@@ -69,7 +69,9 @@
         display: inline-block;
         width: 1em;
         height: 1em;
-        text-indent: .1em;
+        // text-indent: .1em;
+        fill: currentColor;
+        stroke: currentColor; 
       }
 
 

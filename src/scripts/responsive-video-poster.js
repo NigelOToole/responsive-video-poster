@@ -67,15 +67,14 @@ const ResponsiveVideoPoster = function({
     
     let transitionDuration = getTransitionDuration(overlay);
     let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
-    let videoType = (video.nodeName === 'VIDEO') ? 'video' : 'embed';
+    if (embedTransitionDuration < 50) embedTransitionDuration = 50;
 
 		overlay.classList.add(animClass);
-
     video.setAttribute('aria-hidden', false);
     video.setAttribute('tabindex', 0);
     video.focus();
 
-    if(videoType === 'video') {
+    if(video.nodeName === 'VIDEO') {
       video.setAttribute('preload', 'auto');
 
       setTimeout(() => {
@@ -84,9 +83,13 @@ const ResponsiveVideoPoster = function({
       }, transitionDuration);
     }
     else {
+      let videoSrc = video.getAttribute('src');
+      video.setAttribute('src', '');
+
+      if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
+
       setTimeout(() => {
-        if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
-        video.setAttribute('src', `${addParameterToURL(video.getAttribute('src'), 'autoplay=1')}`);
+        video.setAttribute('src', `${addParameterToURL(videoSrc, 'autoplay=1')}`);
       }, embedTransitionDuration);
     }
 

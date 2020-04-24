@@ -54,6 +54,7 @@ function startAppServer() {
   server.init({
     notify: false,
     port: 9000,
+    ghostMode: false,
     server: {
       baseDir: [`${paths.tmp}`, `${paths.src}`],
       routes: {

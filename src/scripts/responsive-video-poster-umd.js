@@ -18,15 +18,14 @@
   });
   _exports["default"] = void 0;
 
-  // Use an img or picture element as the poster image for a video since the poster does not support src-set. This allows you to specify multiple image sizes which is better for performance. It adds an stylable overlay to the image which starts the video.
-
   /**
     Responsive images for Video posters
   
     @param {Object} object - Container for all options.
       @param {string} selector - Container element selector.
-      @param {string} overlaySelector - Overlay element containing the responsive image and the play button.
-      @param {string} videoSelector - Video element.
+      @param {string} overlaySelector - Overlay element selector.
+      @param {string} posterSelector - Poster element selector.
+      @param {string} videoSelector - Video element selector.
       @param {string} animClass - CSS class to transition the video overlay between states.
       @param {string} inactiveClass - CSS class to hide the video overlay.
       @param {integer} embedPreload - Amount of time given to preload an embedded video.
@@ -37,6 +36,8 @@
         selector = _ref$selector === void 0 ? '.responsive-video-poster' : _ref$selector,
         _ref$overlaySelector = _ref.overlaySelector,
         overlaySelector = _ref$overlaySelector === void 0 ? '.video-overlay' : _ref$overlaySelector,
+        _ref$posterSelector = _ref.posterSelector,
+        posterSelector = _ref$posterSelector === void 0 ? '.poster' : _ref$posterSelector,
         _ref$videoSelector = _ref.videoSelector,
         videoSelector = _ref$videoSelector === void 0 ? '.video' : _ref$videoSelector,
         _ref$animClass = _ref.animClass,
@@ -47,9 +48,9 @@
         embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
 
     // Options
-    // const elements = document.querySelectorAll(selector);
-    var instance;
+    var element;
     var overlay;
+    var poster;
     var video;
     var videoControls; // Utils
 
@@ -71,7 +72,8 @@
         detail: eventDetail
       });
       element.dispatchEvent(event);
-    };
+    }; // Methods
+
 
     var clickHandler = function clickHandler(event) {
       event.preventDefault();
@@ -79,7 +81,7 @@
     };
 
     var playVideo = function playVideo() {
-      fireEvent(instance, 'playVideo', {
+      fireEvent(element, 'playVideo', {
         action: 'start'
       });
       var transitionDuration = getTransitionDuration(overlay);
@@ -104,22 +106,24 @@
       }
 
       setTimeout(function () {
-        fireEvent(instance, 'playVideo', {
+        fireEvent(element, 'playVideo', {
           action: 'end'
         });
         overlay.classList.remove(animClass);
         overlay.classList.add(inactiveClass);
         overlay.style.display = 'none';
       }, transitionDuration);
-    }; // Setup properties of the instance
+    }; // Setup properties of the element
 
 
     var setup = function setup() {
-      overlay = instance.querySelector(overlaySelector);
-      video = instance.querySelector(videoSelector);
+      overlay = element.querySelector(overlaySelector);
+      video = element.querySelector(videoSelector);
+      poster = element.querySelector(posterSelector);
       if (overlay === null || video === null) return;
       video.setAttribute('aria-hidden', true);
-      video.setAttribute('tabindex', -1);
+      video.setAttribute('tabindex', -1); // Video controls are hidden so the transition between the poster and video is seamless
+
       videoControls = video.getAttribute('controls') === '';
       if (videoControls) video.removeAttribute('controls');
       overlay.addEventListener('click', function (event) {
@@ -129,31 +133,28 @@
 
 
     var init = function init() {
-      // Attempt to loop elements to init but it does'nt retain state
-      // if(typeof selector === 'string') {
-      //   let elements = document.querySelectorAll(selector);
-      //   if(elements.length) {
-      //     for (const item of elements) {
-      //       console.log(item);
-      //       instance = item;
-      //       ResponsiveVideoPoster({ selector: item });
-      //     }
-      //   }
-      //   else {
-      //     return;
-      //   }
-      // }
-      instance = typeof selector === 'string' ? document.querySelector(selector) : selector;
-      if (instance === null) return;
+      element = typeof selector === 'string' ? document.querySelector(selector) : selector;
+      if (element === null) return;
       setup();
     }; // Self initiate
 
 
-    init(); // Reveal API
+    init();
+
+    var getInfo = function getInfo() {
+      return {
+        element: element,
+        overlay: overlay,
+        poster: poster,
+        video: video
+      };
+    }; // Reveal API
+
 
     return {
       init: init,
-      playVideo: playVideo
+      playVideo: playVideo,
+      getInfo: getInfo
     };
   };
 
