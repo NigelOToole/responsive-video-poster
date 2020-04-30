@@ -19,7 +19,7 @@
   _exports["default"] = void 0;
 
   /**
-    Responsive images for Video posters
+    Responsive poster image for videos
   
     @param {Object} object - Container for all options.
       @param {string} selector - Container element selector.
@@ -29,6 +29,7 @@
       @param {string} animClass - CSS class to transition the video overlay between states.
       @param {string} inactiveClass - CSS class to hide the video overlay.
       @param {integer} embedPreload - Amount of time given to preload an embedded video.
+      @param {boolean} hideControls - Hide video controls while transitioning overlay.
   */
   var ResponsiveVideoPoster = function ResponsiveVideoPoster() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -45,7 +46,9 @@
         _ref$inactiveClass = _ref.inactiveClass,
         inactiveClass = _ref$inactiveClass === void 0 ? 'is-inactive' : _ref$inactiveClass,
         _ref$embedPreload = _ref.embedPreload,
-        embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload;
+        embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload,
+        _ref$hideControls = _ref.hideControls,
+        hideControls = _ref$hideControls === void 0 ? false : _ref$hideControls;
 
     // Options
     var element;
@@ -96,7 +99,7 @@
         video.setAttribute('preload', 'auto');
         setTimeout(function () {
           video.play();
-          if (videoControls) video.setAttribute('controls', '');
+          if (videoControls && hideControls) video.setAttribute('controls', '');
         }, transitionDuration);
       } else {
         var videoSrc = video.getAttribute('src');
@@ -115,8 +118,7 @@
         overlay.classList.add(inactiveClass);
         overlay.style.display = 'none';
       }, transitionDuration);
-    }; // Setup properties of the element
-
+    };
 
     var setup = function setup() {
       overlay = element.querySelector(overlaySelector);
@@ -124,15 +126,17 @@
       poster = element.querySelector(posterSelector);
       if (overlay === null || video === null) return;
       video.setAttribute('aria-hidden', true);
-      video.setAttribute('tabindex', -1); // Video controls are hidden so the transition between the poster and video is seamless
+      video.setAttribute('tabindex', -1);
 
-      videoControls = video.getAttribute('controls') === '';
-      if (videoControls) video.removeAttribute('controls');
+      if (hideControls) {
+        videoControls = video.getAttribute('controls') === '';
+        if (videoControls) video.removeAttribute('controls');
+      }
+
       overlay.addEventListener('click', function (event) {
         return clickHandler(event);
       });
-    }; // Init
-
+    };
 
     var init = function init() {
       element = typeof selector === 'string' ? document.querySelector(selector) : selector;
@@ -141,7 +145,7 @@
     }; // Self initiate
 
 
-    init();
+    init(); // Reveal API
 
     var getInfo = function getInfo() {
       return {
@@ -150,8 +154,7 @@
         poster: poster,
         video: video
       };
-    }; // Reveal API
-
+    };
 
     return {
       init: init,

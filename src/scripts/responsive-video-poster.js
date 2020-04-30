@@ -1,5 +1,5 @@
 /**
-  Responsive images for Video posters
+  Responsive poster image for videos
 
   @param {Object} object - Container for all options.
     @param {string} selector - Container element selector.
@@ -64,7 +64,6 @@ const ResponsiveVideoPoster = function({
   
 
   const playVideo = function() {
-
     fireEvent(element, 'playVideo', { action: 'start' });
     
     let transitionDuration = getTransitionDuration(overlay);
@@ -106,7 +105,6 @@ const ResponsiveVideoPoster = function({
   }
 
 
-  // Setup properties of the element
   const setup = function() {
     overlay = element.querySelector(overlaySelector);
     video = element.querySelector(videoSelector);
@@ -125,14 +123,11 @@ const ResponsiveVideoPoster = function({
   };
 
 
-  // Init
   const init = function() {    
-    
     element = (typeof selector === 'string') ? document.querySelector(selector) : selector;
     if (element === null) return;
 
     setup();
-
   };
 
 
@@ -141,6 +136,8 @@ const ResponsiveVideoPoster = function({
 	init();
 
 
+
+  // Reveal API
   const getInfo = () => {
     return {
       element,
@@ -150,7 +147,6 @@ const ResponsiveVideoPoster = function({
     };
   };
 
-  // Reveal API
   return {
     init,
     playVideo,

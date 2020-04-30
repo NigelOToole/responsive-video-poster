@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Responsive Video Poster - Responsive poster image for a video</title>
+    <title>Responsive Video Poster - Responsive poster image for videos</title>
     <meta name="description" content="Video elements only allow specifying one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.">
 
     <link rel="stylesheet" href="styles/site.css">
@@ -29,13 +29,10 @@
 
     <div class="fullwidth">
       <div class="container separator">
-        <h2>Responsive poster image for a video, which is better for performance and gives full control of video placeholders.</h2>
+        <h2>Responsive poster image for videos to improve performance and allow full control of video placeholders.</h2>
 
         <p>
-          Video elements only allow specifying one image as the poster, which is not optimal for performance. 
-          This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. 
-          This also gives full styling control of video placeholders.
-          Performance optimizations are also included for loading of both native and embedded videos.
+          Video elements only allow one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.
         </p>
         
       </div>
@@ -121,7 +118,7 @@
         <div class="row">
           <div class="col-md-4">        
             <h3>&lt;iframe&gt; and &lt;img&gt;</h3>
-            <p>The iframe includes an empty srcdoc attribute which prevents the video site from loading its scripts until the user clicks on the video. The poster is the middle frame of the video.</p>
+            <p>The iframe includes an empty srcdoc attribute which prevents the video site from loading it's scripts until the user clicks on the video. The poster is the middle frame of the video.</p>
           </div>
 
           <div class="col-md-8">
@@ -168,7 +165,7 @@
 
           <p>The script is an ES6(ES2015) module but the compiled version is included in the build as "src/scripts/responsive-video-poster-umd.js". You can also copy "src/scripts/responsive-video-poster.js" into your own site if your build process can accommodate ES6 modules.</p>
 
-<pre><code>import ResponsiveVideoPoster from 'responsive-video-poster.js';;
+<pre><code>import ResponsiveVideoPoster from 'responsive-video-poster.js';
 
 // Init with string - default setup for one instance
 const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--default' });
@@ -322,7 +319,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
         <div class="subsection">
           <h2>Compatibility</h2>
 
-          <p>Supports all modern browsers(Firefox, Chrome, Safari and Edge) released as of April 2020.</p>
+          <p>Supports all modern browsers (Firefox, Chrome, Safari and Edge) released as of April 2020.</p>
         </div>
 
 

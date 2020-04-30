@@ -1,16 +1,17 @@
 # Responsive Video Poster
-### A JavaScript plugin to add a responsive poster image for the video element.
+### Responsive poster image for videos to improve performance and allow full control of video placeholders.
+
+Video elements only allow one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.
 
 ### [View demo](http://nigelotoole.github.io/responsive-video-poster/)
 
-
-
+---
 ## Installation
 ```javascript
 $ npm install responsive-video-poster --save-dev
 ```
 
-
+---
 ## Usage
 
 ### Import JS
@@ -18,20 +19,30 @@ $ npm install responsive-video-poster --save-dev
 The script is an ES6(ES2015) module but the compiled version is included in the build as "src/scripts/responsive-video-poster-umd.js". You can also copy "src/scripts/responsive-video-poster.js" into your own site if your build process can accommodate ES6 modules.
 
 ```javascript
-import videoPosterPlus from 'responsive-video-poster';
+import ResponsiveVideoPoster from 'responsive-video-poster.js';
 
-// Init with default setup
-videoPosterPlus();
+// Init with string - default setup for one instance
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--default' });
+
+
+// Init by loop - this wont allow access to methods
+const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
+
+for (const item of responsiveVideoPosterElements) {
+  ResponsiveVideoPoster({ selector: item });
+}
+
 
 // Init with all options at default setting
-const videoPosterPlusDefault = videoPosterPlus({
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   selector: '.responsive-video-poster',
-  itemSelector: '.responsive-video-poster__card',
-  animationName: 'swing',
-  animationPostfixEnter: 'enter',
-  animationPostfixLeave: 'leave',
-  enableTouch: true,
-  touchThreshold: 250
+  overlaySelector: '.video-overlay',
+  posterSelector: '.poster',
+  videoSelector: '.video',
+  animClass: 'is-anim',
+  inactiveClass: 'is-inactive',
+  embedPreload: 500,
+  hideControls: false
 });
 ```
 
@@ -39,12 +50,13 @@ const videoPosterPlusDefault = videoPosterPlus({
 | Property                | Default                     | Type       | Description                                                                                       |
 | ----------------------- | --------------------------- | ---------- | ------------------------------------------------------------------------------------------------- |
 | `selector`              | '.responsive-video-poster'         | String     | Container element selector.                                                                       |
-| `itemSelector`          | '.responsive-video-poster\_\_card' | String     | Item element selector.                                                                            |
-| `animationName`         | 'swing'                     | String     | Animation class.                                                                                  |
-| `animationPostfixEnter` | 'enter'                     | String     | Animation CSS class postfix for enter event.                                                      |
-| `animationPostfixLeave` | 'leave'                     | String     | Animation CSS class postfix for leave event.                                                      |
-| `enableTouch`           | true                        | Boolean    | Adds touch event to show content on first click then follow link on the second click.             |
-| `touchThreshold`        | 250                         | Number(ms) | The touch length in ms to trigger the reveal, this is to prevent triggering if user is scrolling. |
+| `overlaySelector`          | '.video-overlay' | String     | Overlay element selector.                                                                            |
+| `posterSelector`          | '.poster' | String     | Poster element selector.                                                                            |
+| `videoSelector`          | '.video' | String     | Video element selector.                                                                            |
+| `animClass`          | 'is-anim' | String     | CSS class to transition the video overlay between states.                                                                            |
+| `inactiveClass`          | 'is-inactive' | String     | CSS class to hide the video overlay.                                                                            |
+| `embedPreload`          | 500 | Integer(ms)     | Amount of time given to preload an embedded video.                                                                            |
+| `hideControls`          | false | Boolean     | Hide video controls while transitioning overlay.                                                                            |
 
 
 ### Import SASS
@@ -57,58 +69,61 @@ const videoPosterPlusDefault = videoPosterPlus({
 ### Markup
 
 ```html
-<div class="responsive-video-poster">
+<div class="responsive-video-poster responsive-video-poster--16by9">
+                
+  <button class="video-overlay" aria-label="Play video">
+    <div class="poster-btn"><svg class="poster-btn-icon"> ... </svg></div>
 
-  <a href="#" class="responsive-video-poster__card">
-    <img src="images/image.jpg" alt="Image" class="img-fluid">
+    <img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster">
+  </button>
 
-    <div class="responsive-video-poster__overlay responsive-video-poster__anim--enter">
-      <h3 class="responsive-video-poster__title">Title</h3>
-      <p class="responsive-video-poster__text">Description text.</p>
-    </div>
-  </a>
+  <video src="videos/video.mp4" preload="metadata" class="video" controls></video>
 
-  ...
 </div>
 ```
 
 
-### Using other tags
-The demos use &lt;a&gt; tags for the "responsive-video-poster__card" but a &lt;div&gt; can be used as below, specifying the tabindex ensures keyboard navigation works as expected. They can all have a value of 0 and will follow the source order of the divs.
+### Bootstrap Example
 
 ```html
-<div class="responsive-video-poster__card" tabindex="0">
-  ...
+<div class="responsive-video-poster embed-responsive embed-responsive-16by9">
+                
+  <button class="video-overlay embed-responsive-item" aria-label="Play video">
+    <div class="poster-btn"><svg class="poster-btn-icon"> ... </svg></div>
+
+    <img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster img-fluid">
+  </button>
+
+  <video src="videos/video.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
+
 </div>
 ```
 
-### Inverted animations
+---
+## Video loading optimizations
 
-Most of the animations above can be inverted so the overlay is visible by default and animates out on hover. Change the class 'responsive-video-poster__anim--enter' to 'responsive-video-poster__anim--leave' for this effect.
+[Nunjucks](https://mozilla.github.io/nunjucks/)
 
-You can also add the class 'responsive-video-poster__anim--enter' or 'responsive-video-poster__anim--leave' to the image to animate it at the same time as overlay. This effect can be seen in the Slide & Push demo.
+The [video element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) includes preload="metadata" and the embedded video includes an [srcdoc=""](https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g) so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. This will reduce the initial page load but may increase lag in playback for some users. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.
 
+---
 ## Events
 
-A 'directionChange' event is broadcast once a user enters/leaves an item with information about the action(enter,leave) and direction(top, right, bottom, left).
+A 'playVideo' event is started once a user clicks the video overlay. The event is ended once the overlay has become inactive and the video starts playing.
 
 ```javascript
-document.querySelector('#test').addEventListener('directionChange', (event) => { 
-  console.log(`Action: ${event.detail.action} Direction: ${event.detail.direction}`);
+document.querySelector('#responsive-video-poster--default').addEventListener('playVideo', (event) => { 
+  console.log(`Action: ${event.detail.action}`);
 });
 ```
 
+---
 ## Compatibility
 
-### Touch support
-The plugin will detect touch support and reveal the hidden content on first click then follow link on the second click. This can be disabled with the option enableTouch.
+Supports all modern browsers (Firefox, Chrome, Safari and Edge) released as of April 2020.
 
 
-### Browser support
-Supports all modern browsers(Firefox, Chrome and Edge) released as of January 2018. For older browsers you may need to include polyfills for [Nodelist.forEach](https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach), [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) and [Passive Event Listeners](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
-
-
-
+---
 ## Demo site
 Clone or download from Github.
 
@@ -117,10 +132,11 @@ $ npm install
 $ gulp serve
 ```
 
+---
 ### Credits
 
-Inspired by a Codepen by [Noel Delgado](https://codepen.io/noeldelgado/pen/pGwFx), this [Stack overflow answer](https://stackoverflow.com/a/3647634), the article [Get an Element's position using javascript](https://www.kirupa.com/html5/get_element_position_using_javascript.htm) and [Images from Unsplash.](https://unsplash.com).
+Covverr videos of [Lago di braies](https://coverr.co/videos/lago-di-braies-y1yBShzUTZ) and [Lofoten rocks](https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG). Youtube video of [Tustan Karpaty mountains](https://www.youtube.com/watch?v=FjPvaGt6Pw4). [Lazy loading of an embedded video](https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g) by Arthur Corenzan. 
 
-
+---
 ### License
 MIT © Nigel O Toole
