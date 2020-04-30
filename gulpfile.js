@@ -18,7 +18,7 @@ const paths = {
 function styles() {
   return src(`${paths.src}/styles/*.scss`)
     .pipe($.plumber())
-    .pipe($.sourcemaps.init())
+    // .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
       outputStyle: 'expanded',
       precision: 10,
@@ -28,7 +28,7 @@ function styles() {
     .pipe($.postcss([
       autoprefixer()
     ]))
-    .pipe($.sourcemaps.write())
+    // .pipe($.sourcemaps.write())
     .pipe(dest(`${paths.tmp}/styles`))
     .pipe(server.reload({stream: true}));
 };
@@ -77,18 +77,21 @@ exports.serve = serve;
 
 
 // ----- Build tasks ------
-function compress() {
-  return src([`${paths.tmp}/*/**/*.{html,css,js}`, `${paths.src}/**/*.{html,js,jpg,gif,png}`])
-    .pipe(dest(`${paths.dest}`));
-}
+function moveFiles() {
+  // return src([`${paths.tmp}/**/*.{html,css,js}`, `${paths.src}/**/*.{html,js,jpg,gif,png,webp,mp4,webm}`])
+  //   .pipe(dest(`${paths.dest}`));
 
+  return src([`${paths.tmp}/**/*.css`])
+    .pipe(dest(`${paths.src}`));
+}
+exports.moveFiles = moveFiles;
 function clean() {
   return del([`${paths.tmp}`, `${paths.dest}`])
 }
 
 exports.clean = clean;
 
-const build = series(clean, parallel(styles, scripts), compress);
+const build = series(clean, parallel(styles, scripts), moveFiles);
 
 exports.build = build;
 exports.default = build;

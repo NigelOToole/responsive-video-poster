@@ -102,8 +102,6 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 ---
 ## Video loading optimizations
 
-[Nunjucks](https://mozilla.github.io/nunjucks/)
-
 The [video element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) includes preload="metadata" and the embedded video includes an [srcdoc=""](https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g) so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. This will reduce the initial page load but may increase lag in playback for some users. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.
 
 ---
