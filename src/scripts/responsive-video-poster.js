@@ -9,6 +9,7 @@
     @param {string} animClass - CSS class to transition the video overlay between states.
     @param {string} inactiveClass - CSS class to hide the video overlay.
     @param {integer} embedPreload - Amount of time given to preload an embedded video.
+    @param {boolean} hideControls - Hide video controls while transitioning overlay.
 */
 
 const ResponsiveVideoPoster = function({
@@ -19,6 +20,7 @@ const ResponsiveVideoPoster = function({
   animClass: animClass = 'is-anim',
   inactiveClass: inactiveClass = 'is-inactive',
   embedPreload: embedPreload = 500,
+  hideControls: hideControls = false
 	} = {}) {
 
   // Options
@@ -79,7 +81,7 @@ const ResponsiveVideoPoster = function({
 
       setTimeout(() => {
         video.play();
-        if(videoControls) video.setAttribute('controls', '');
+        if(videoControls && hideControls) video.setAttribute('controls', '');
       }, transitionDuration);
     }
     else {
@@ -114,9 +116,10 @@ const ResponsiveVideoPoster = function({
     video.setAttribute('aria-hidden', true);
     video.setAttribute('tabindex', -1);
 
-    // Video controls are hidden so the transition between the poster and video is seamless
-    videoControls = (video.getAttribute('controls') === '');
-    if(videoControls) video.removeAttribute('controls');
+    if(hideControls) {
+      videoControls = (video.getAttribute('controls') === '');
+      if(videoControls) video.removeAttribute('controls');
+    }
 
     overlay.addEventListener('click', (event) => clickHandler(event));
   };

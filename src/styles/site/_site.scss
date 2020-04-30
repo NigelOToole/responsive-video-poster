@@ -162,11 +162,11 @@ pre {
   .container {
     display: flex;
     
-    @media (max-width: 575px) {
+    @media (max-width: 767px) {
       flex-flow: column;
     }
 
-    @media (min-width: 576px) {
+    @media (min-width: 768px) {
       align-items: center;
     }
   }
@@ -191,7 +191,7 @@ pre {
       }
     }
 
-    @media (min-width: 576px) {
+    @media (min-width: 768px) {
       margin-left: auto;
     }
   }
@@ -211,7 +211,7 @@ pre {
   cursor: pointer;
   border: 1px solid #bbb;
   padding: 4px 12px 6px 12px;
-  font-size: 18px;
+  font-size: 1rem;
   background-color: #fff;
   border-radius: 4px;
   transition: background-color .3s, color .3s;

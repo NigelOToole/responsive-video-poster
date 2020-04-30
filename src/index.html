@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Responsive Video Poster - Responsive poster image for a video</title>
+    <meta name="description" content="Video elements only allow specifying one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.">
 
     <link rel="stylesheet" href="styles/site.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono|Open+Sans:300,400&display=swap">
@@ -16,7 +17,7 @@
     <header class="header">
       <div class="container">
 
-        <h1 class="logo-text">Responsive Video Poster</h1>
+        <h1 class="logo-text">Responsive Video Poster</h1> 
 
         <nav class="header-links">
           <a href="https://github.com/NigelOToole/responsive-video-poster/archive/master.zip" class="btn-demo btn-demo--white">Download</a>
@@ -47,22 +48,22 @@
         <div class="row">
           <div class="col-md-4"> 
             <h3>&lt;video&gt; and &lt;img&gt;</h3>
-            <p>Poster is the first frame of the video.</p>
+            <p>The default setup with the poster as the first frame of the video.</p>
           </div>
 
           <div class="col-md-8">
 
-            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-default">
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--default">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn">
+                <span class="poster-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </div>
+                </span>
 
                 <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
               </button>
 
-              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="metadata" class="video" controls></video>
+              <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="auto" class="video" controls playsinline></video>
 
             </div>
 
@@ -80,17 +81,17 @@
         <div class="row">
           <div class="col-md-4"> 
             <h3>&lt;video&gt; and &lt;picture&gt;</h3>
-            <p>Poster is the last frame of the video.</p>
+            <p>The picture element is used for the poster and the video controls are hidden while transitioning the overlay. The poster is the last frame of the video.</p>
           </div>
 
           <div class="col-md-8">
             
-            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-picture">
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--picture">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn">
+                <span class="poster-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </div>
+                </span>
 
                 <picture>
                   <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.webp 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.webp 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/webp">
@@ -120,17 +121,17 @@
         <div class="row">
           <div class="col-md-4">        
             <h3>&lt;iframe&gt; and &lt;img&gt;</h3>
-            <p>Poster is the middle frame of the video. The iframe includes and empty srcdoc attribute which prevents the video site from loading its scripts until the user clicks the play button. This will reduce the initial page weight but may seem laggy to users so remove if not needed.</p>
+            <p>The iframe includes an empty srcdoc attribute which prevents the video site from loading its scripts until the user clicks on the video. The poster is the middle frame of the video.</p>
           </div>
 
           <div class="col-md-8">
             
-            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--demo-iframe">
+            <div class="responsive-video-poster responsive-video-poster--16by9" id="responsive-video-poster--iframe">
                 
               <button class="video-overlay" aria-label="Play video">
-                <div class="poster-btn">
+                <span class="poster-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                </div>
+                </span>
 
                 <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
               </button>
@@ -170,7 +171,7 @@
 <pre><code>import ResponsiveVideoPoster from 'responsive-video-poster.js';;
 
 // Init with string - default setup for one instance
-const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--demo-default' });
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--default' });
 
 
 // Init by loop - this wont allow access to methods
@@ -189,7 +190,8 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   videoSelector: '.video',
   animClass: 'is-anim',
   inactiveClass: 'is-inactive',
-  embedPreload: 500
+  embedPreload: 500,
+  hideControls: false
 });
 </code></pre>
 
@@ -245,19 +247,20 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
             <td>Integer(ms)</td>
             <td>Amount of time given to preload an embedded video.</td>
           </tr>
+          <tr>
+            <td><code>hideControls</code></td>
+            <td>false</td>
+            <td>Boolean</td>
+            <td>Hide video controls while transitioning overlay.</td>
+          </tr>
         </table>
         </div>
+
 
 
         <h3>Import Sass</h3>
 
 <pre><code>@import "node_modules/responsive-video-poster/src/styles/responsive-video-poster.scss";</code></pre>
-
-
-
-
-<!-- <p>This demo uses the "embed-responsive" classes from Bootstrap but any similar pattern can be used to main the image and video responsive.</p> -->
-
 
 
 
@@ -268,7 +271,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 <pre><code>&lt;div class="responsive-video-poster responsive-video-poster--16by9"&gt;
                 
   &lt;button class="video-overlay" aria-label="Play video"&gt;
-    &lt;div class="poster-btn"&gt;&lt;span class="poster-btn-icon"&gt;▶&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="poster-btn"&gt;&lt;svg class="poster-btn-icon"&gt; ... &lt;/svg&gt;&lt;/div&gt;
 
     &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster"&gt;
   &lt;/button&gt;
@@ -284,7 +287,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 <pre><code>&lt;div class="responsive-video-poster embed-responsive embed-responsive-16by9"&gt;
                 
   &lt;button class="video-overlay embed-responsive-item" aria-label="Play video"&gt;
-    &lt;div class="poster-btn"&gt;&lt;span class="poster-btn-icon"&gt;▶&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="poster-btn"&gt;&lt;svg class="poster-btn-icon"&gt; ... &lt;/svg&gt;&lt;/div&gt;
 
     &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster img-fluid"&gt;
   &lt;/button&gt;
@@ -300,7 +303,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
         <div class="subsection">
           <h2>Video loading optimizations</h2>
 
-          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload="metadata" and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">srcdoc=""</a> so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
+          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload="metadata" and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">srcdoc=""</a> so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. This will reduce the initial page load but may increase lag in playback for some users. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
         </div>
 
 
@@ -309,7 +312,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 
           <p>A 'playVideo' event is started once a user clicks the video overlay. The event is ended once the overlay has become inactive and the video starts playing.</p>
 
-<pre><code>document.querySelector('#responsive-video-poster--demo-default').addEventListener('playVideo', (event) => { 
+<pre><code>document.querySelector('#responsive-video-poster--default').addEventListener('playVideo', (event) => { 
   console.log(`Action: ${event.detail.action}`);
 });
 </code></pre>
@@ -322,6 +325,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
           <p>Supports all modern browsers(Firefox, Chrome, Safari and Edge) released as of April 2020.</p>
         </div>
 
+
         <div class="subsection">
           <h2>Demo site</h2>
           <p>Clone or download from Github.</p>
@@ -331,6 +335,7 @@ $ gulp serve
 </code></pre>
 
         </div>
+
 
         <div class="subsection">
           <h3>Credits</h3>
