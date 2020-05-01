@@ -29,7 +29,8 @@ function styles() {
       autoprefixer()
     ]))
     // .pipe($.sourcemaps.write())
-    .pipe(dest(`${paths.tmp}/styles`))
+    // .pipe(dest(`${paths.tmp}/styles`))
+    .pipe(dest(`${paths.src}/styles`))
     .pipe(server.reload({stream: true}));
 };
 
@@ -56,7 +57,8 @@ function startAppServer() {
     port: 9000,
     ghostMode: false,
     server: {
-      baseDir: [`${paths.tmp}`, `${paths.src}`],
+      // baseDir: [`${paths.tmp}`, `${paths.src}`],
+      baseDir: [`${paths.src}`],
       routes: {
         '/node_modules': 'node_modules'
       },
@@ -78,11 +80,11 @@ exports.serve = serve;
 
 // ----- Build tasks ------
 function moveFiles() {
-  // return src([`${paths.tmp}/**/*.{html,css,js}`, `${paths.src}/**/*.{html,js,jpg,gif,png,webp,mp4,webm}`])
-  //   .pipe(dest(`${paths.dest}`));
+  return src([`${paths.tmp}/**/*.{html,css,js}`, `${paths.src}/**/*.{html,css,js,jpg,gif,png,webp,mp4,webm}`])
+    .pipe(dest(`${paths.dest}`));
 
-  return src([`${paths.tmp}/**/*.css`])
-    .pipe(dest(`${paths.src}`));
+  // return src([`${paths.tmp}/**/*.css`])
+  //   .pipe(dest(`${paths.src}`));
 }
 exports.moveFiles = moveFiles;
 function clean() {

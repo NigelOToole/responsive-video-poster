@@ -142,6 +142,12 @@ pre {
   border-bottom: 1px solid #ddd;
 }
 
+.intro {
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 
 
 // ----- Header and footer -----
@@ -229,17 +235,7 @@ pre {
 
 
 
-// ----- Utilities -----
-.d-none {
-  display: none !important;
-}
-
-.m-0 {
-  margin: 0;
-}
-
-
-// Bootstrap grid example
+// ----- Bootstrap grid -----
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -278,3 +274,14 @@ pre {
       max-width: 66.666667%;
     }
   }
+
+
+
+// ----- Utilities -----
+.d-none {
+  display: none !important;
+}
+
+.m-0 {
+  margin: 0;
+}
