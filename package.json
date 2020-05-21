@@ -26,21 +26,21 @@
     "node": ">=4"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.6",
     "@babel/plugin-transform-modules-umd": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "autoprefixer": "^9.7.5",
+    "@babel/preset-env": "^7.9.6",
+    "autoprefixer": "^9.8.0",
     "browser-sync": "^2.26.7",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
-    "gulp-cli": "^2.0.1",
+    "gulp-cli": "^2.2.1",
     "gulp-gh-pages": "^0.5.4",
     "gulp-load-plugins": "^1.6.0",
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.2.0"
   },
   "scripts": {
