@@ -35,6 +35,7 @@
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.0.1",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-load-plugins": "^1.6.0",
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^8.0.0",
