@@ -6,7 +6,6 @@ const browserSync = require('browser-sync');
 const server = browserSync.create();
 const del = require('del');
 const autoprefixer = require('autoprefixer');
-// const ghPages = require('gulp-gh-pages');
 
 const paths = {
   src: 'src',
@@ -75,7 +74,10 @@ function startAppServer() {
 };
 
 
-let serve = series(clean, parallel(styles, scripts), startAppServer);
+const compile = series(clean, parallel(styles, scripts));
+exports.compile = compile;
+
+const serve = series(compile, startAppServer);
 exports.serve = serve;
 
 
@@ -96,6 +98,6 @@ function clean() {
 exports.clean = clean;
 
 
-const build = series(clean, parallel(styles, scripts), moveFiles);
+const build = series(compile, moveFiles);
 exports.build = build;
 exports.default = build;
