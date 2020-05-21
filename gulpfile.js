@@ -89,18 +89,13 @@ function moveFiles() {
 };
 exports.moveFiles = moveFiles;
 
+
 function clean() {
   return del([`${paths.tmp}`, `${paths.dest}`])
 };
 exports.clean = clean;
 
-function moveToGhPages() {
-  return src(`${paths.dest}/**/*`)
-    .pipe($.ghPages());
-};
-exports.moveToGhPages = moveToGhPages;
 
-
-const build = series(clean, parallel(styles, scripts), moveFiles, moveToGhPages);
+const build = series(clean, parallel(styles, scripts), moveFiles);
 exports.build = build;
 exports.default = build;
