@@ -21,15 +21,14 @@
   /**
     Responsive poster image for videos
   
-    @param {Object} object - Container for all options.
-      @param {string} selector - Container element selector.
-      @param {string} overlaySelector - Overlay element selector.
-      @param {string} posterSelector - Poster element selector.
-      @param {string} videoSelector - Video element selector.
-      @param {string} animClass - CSS class to transition the video overlay between states.
-      @param {string} inactiveClass - CSS class to hide the video overlay.
-      @param {integer} embedPreload - Amount of time given to preload an embedded video.
-      @param {boolean} hideControls - Hide video controls while transitioning overlay.
+    @param {string} selector - Container element selector.
+    @param {string} overlaySelector - Overlay element selector.
+    @param {string} posterSelector - Poster element selector.
+    @param {string} videoSelector - Video element selector.
+    @param {string} animClass - CSS class to transition the video overlay between states.
+    @param {string} inactiveClass - CSS class to hide the video overlay.
+    @param {integer} embedPreload - Amount of time given to preload an embedded video.
+    @param {boolean} hideControls - Hide video controls while transitioning overlay.
   */
   var ResponsiveVideoPoster = function ResponsiveVideoPoster() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -50,12 +49,11 @@
         _ref$hideControls = _ref.hideControls,
         hideControls = _ref$hideControls === void 0 ? false : _ref$hideControls;
 
-    // Options
     var element;
     var overlay;
     var poster;
     var video;
-    var videoControls; // Utils
+    var videoControls; // Utilities
 
     var getTransitionDuration = function getTransitionDuration(element) {
       var transitionDuration = getComputedStyle(element)['transitionDuration'];
@@ -71,17 +69,12 @@
 
     var fireEvent = function fireEvent(element, eventName, eventDetail) {
       var event = new CustomEvent(eventName, {
-        bubbles: false,
+        bubbles: true,
         detail: eventDetail
       });
       element.dispatchEvent(event);
     }; // Methods
 
-
-    var clickHandler = function clickHandler(event) {
-      event.preventDefault();
-      playVideo();
-    };
 
     var playVideo = function playVideo() {
       fireEvent(element, 'playVideo', {
@@ -120,6 +113,15 @@
       }, transitionDuration);
     };
 
+    var addDocumentEventListener = function addDocumentEventListener(targetSelector, targetElement) {
+      document.addEventListener('click', function (event) {
+        var target = event.target.closest(targetSelector) === targetElement;
+        if (!target) return;
+        event.preventDefault();
+        playVideo();
+      });
+    };
+
     var setup = function setup() {
       overlay = element.querySelector(overlaySelector);
       video = element.querySelector(videoSelector);
@@ -133,33 +135,25 @@
         if (videoControls) video.removeAttribute('controls');
       }
 
-      overlay.addEventListener('click', function (event) {
-        return clickHandler(event);
-      });
+      addDocumentEventListener(overlaySelector, overlay);
     };
 
     var init = function init() {
       element = typeof selector === 'string' ? document.querySelector(selector) : selector;
       if (element === null) return;
       setup();
-    }; // Self initiate
+    };
 
+    init(); // API
 
-    init(); // Reveal API
-
-    var getInfo = function getInfo() {
-      return {
+    return {
+      playVideo: playVideo,
+      elements: {
         element: element,
         overlay: overlay,
         poster: poster,
         video: video
-      };
-    };
-
-    return {
-      init: init,
-      playVideo: playVideo,
-      getInfo: getInfo
+      }
     };
   };
 

@@ -53,8 +53,8 @@ exports.scripts = scripts;
 // ----- Serve tasks ------
 function startAppServer() {
   server.init({
-    notify: false,
     port: 9000,
+    notify: false,
     ghostMode: false,
     server: {
       // baseDir: [`${paths.tmp}`, `${paths.src}`],
@@ -79,6 +79,7 @@ exports.compile = compile;
 
 const serve = series(compile, startAppServer);
 exports.serve = serve;
+
 
 
 // ----- Build tasks ------

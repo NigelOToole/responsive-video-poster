@@ -56,7 +56,13 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 | `animClass`          | 'is-anim' | String     | CSS class to transition the video overlay between states.                                                                            |
 | `inactiveClass`          | 'is-inactive' | String     | CSS class to hide the video overlay.                                                                            |
 | `embedPreload`          | 500 | Integer(ms)     | Amount of time given to preload an embedded video.                                                                            |
-| `hideControls`          | false | Boolean     | Hide video controls while transitioning overlay.                                                                            |
+| `hideControls`          | false | Boolean     | Hide video controls while transitioning overlay. 
+
+### API
+| Property                | Type       | Description                                                                                       |
+| ----------------------- | ---------- | ------------------------------------------------------------------------------------------------- |
+| `instance.playVideo()`  | Method     | Plays the video.                                         |
+| `instance['elements']`  | Object     | Returns the elements used by this                        |
 
 
 ### Import SASS
@@ -112,6 +118,13 @@ A 'playVideo' event is started once a user clicks the video overlay. The event i
 ```javascript
 document.querySelector('#responsive-video-poster--default').addEventListener('playVideo', (event) => { 
   console.log(`Action: ${event.detail.action}`);
+});
+```
+
+You can also attach this to the document.
+```javascript
+document.addEventListener('playVideo', (event) => { 
+  console.log(`Target: ${event.target.matches('#responsive-video-poster--default')}`, `Action: ${event.detail.action}`);
 });
 ```
 

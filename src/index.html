@@ -253,6 +253,27 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
         </table>
         </div>
 
+        <h3>API</h3>
+
+        <div class="table-wrapper">
+        <table class="table">
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code>instance.playVideo()</code></td>
+            <td>Method</td>
+            <td>Plays the video.</td>
+          </tr>
+          <tr>
+            <td><code>instance['elements']</code></td>
+            <td>Object</td>
+            <td>Returns the elements used by this instance.</td>
+          </tr>
+        </table>
+        </div>
 
 
         <h3>Import Sass</h3>
@@ -311,6 +332,12 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 
 <pre><code>document.querySelector('#responsive-video-poster--default').addEventListener('playVideo', (event) => { 
   console.log(`Action: ${event.detail.action}`);
+});
+</code></pre>
+
+<p>You can also attach this to the document.</p>
+<pre><code>document.addEventListener('playVideo', (event) => { 
+  console.log(`Target: ${event.target.matches('#responsive-video-poster--default')}`, `Action: ${event.detail.action}`);
 });
 </code></pre>
         </div>

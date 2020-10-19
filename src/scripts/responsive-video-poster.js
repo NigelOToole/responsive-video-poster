@@ -1,29 +1,28 @@
 /**
   Responsive poster image for videos
 
-  @param {Object} object - Container for all options.
-    @param {string} selector - Container element selector.
-    @param {string} overlaySelector - Overlay element selector.
-    @param {string} posterSelector - Poster element selector.
-    @param {string} videoSelector - Video element selector.
-    @param {string} animClass - CSS class to transition the video overlay between states.
-    @param {string} inactiveClass - CSS class to hide the video overlay.
-    @param {integer} embedPreload - Amount of time given to preload an embedded video.
-    @param {boolean} hideControls - Hide video controls while transitioning overlay.
+  @param {string} selector - Container element selector.
+  @param {string} overlaySelector - Overlay element selector.
+  @param {string} posterSelector - Poster element selector.
+  @param {string} videoSelector - Video element selector.
+  @param {string} animClass - CSS class to transition the video overlay between states.
+  @param {string} inactiveClass - CSS class to hide the video overlay.
+  @param {integer} embedPreload - Amount of time given to preload an embedded video.
+  @param {boolean} hideControls - Hide video controls while transitioning overlay.
 */
 
-const ResponsiveVideoPoster = function({
-  selector: selector = '.responsive-video-poster',
-  overlaySelector: overlaySelector = '.video-overlay',
-  posterSelector: posterSelector = '.poster',
-  videoSelector: videoSelector = '.video',
-  animClass: animClass = 'is-anim',
-  inactiveClass: inactiveClass = 'is-inactive',
-  embedPreload: embedPreload = 500,
-  hideControls: hideControls = false
+const ResponsiveVideoPoster = function(
+  {
+    selector = '.responsive-video-poster',
+    overlaySelector = '.video-overlay',
+    posterSelector = '.poster',
+    videoSelector = '.video',
+    animClass = 'is-anim',
+    inactiveClass = 'is-inactive',
+    embedPreload = 500,
+    hideControls = false
 	} = {}) {
 
-  // Options
   let element;
   let overlay;
   let poster;
@@ -32,7 +31,7 @@ const ResponsiveVideoPoster = function({
 
 
 
-	// Utils
+	// Utilities
 	const getTransitionDuration = function (element) {
 		let transitionDuration = getComputedStyle(element)['transitionDuration'];
 		let transitionDurationNumber = parseFloat(transitionDuration);
@@ -47,7 +46,7 @@ const ResponsiveVideoPoster = function({
   
   const fireEvent = (element, eventName, eventDetail) => {
     const event = new CustomEvent(eventName, {
-      bubbles: false,
+      bubbles: true,
       detail: eventDetail,
     });
 
@@ -57,12 +56,6 @@ const ResponsiveVideoPoster = function({
 
 
   // Methods
-  const clickHandler = function(event) {
-    event.preventDefault();
-    playVideo();
-  }  
-  
-
   const playVideo = function() {
     fireEvent(element, 'playVideo', { action: 'start' });
     
@@ -102,7 +95,19 @@ const ResponsiveVideoPoster = function({
       overlay.style.display = 'none';
 		}, transitionDuration);
     
-  }
+  };
+
+
+  const addDocumentEventListener = function(targetSelector, targetElement) {
+    document.addEventListener('click', function(event) {
+
+      let target = (event.target.closest(targetSelector) === targetElement);
+      if (!target) return;
+
+      event.preventDefault();
+      playVideo();
+    });
+  };
 
 
   const setup = function() {
@@ -119,38 +124,30 @@ const ResponsiveVideoPoster = function({
       if(videoControls) video.removeAttribute('controls');
     }
 
-    overlay.addEventListener('click', (event) => clickHandler(event));
+    addDocumentEventListener(overlaySelector, overlay);
   };
 
 
-  const init = function() {    
+  const init = function() {   
     element = (typeof selector === 'string') ? document.querySelector(selector) : selector;
     if (element === null) return;
 
     setup();
   };
 
-
-
-  // Self initiate
 	init();
 
 
 
-  // Reveal API
-  const getInfo = () => {
-    return {
+  // API
+  return {
+    playVideo,
+    elements: {
       element,
       overlay,
       poster,
       video
-    };
-  };
-
-  return {
-    init,
-    playVideo,
-    getInfo
+    }
   };
 
 };
