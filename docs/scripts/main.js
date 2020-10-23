@@ -6,15 +6,15 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   selector: '#responsive-video-poster--default' 
 });
 
-// // Init with string and options
-// const responsiveVideoPosterPicture = ResponsiveVideoPoster({ 
-//   selector: '#responsive-video-poster--picture', 
-//   hideControls: true 
-// });
+// Init with string and options
+const responsiveVideoPosterPicture = ResponsiveVideoPoster({ 
+  selector: '#responsive-video-poster--picture', 
+  hideControls: true 
+});
 
-// // Init with element
-// const responsiveVideoPosterIframeElement = document.querySelector('#responsive-video-poster--iframe');
-// const responsiveVideoPosterIframe = ResponsiveVideoPoster({ selector: responsiveVideoPosterIframeElement });
+// Init with element
+const responsiveVideoPosterIframeElement = document.querySelector('#responsive-video-poster--iframe');
+const responsiveVideoPosterIframe = ResponsiveVideoPoster({ selector: responsiveVideoPosterIframeElement });
 
 // Init with loop - this wont allow access to methods
 // const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
