@@ -89,7 +89,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 ```
 
 
-### Bootstrap Example
+### Bootstrap 4 Example
 
 ```html
 <div class="responsive-video-poster embed-responsive embed-responsive-16by9">
@@ -101,6 +101,23 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   </button>
 
   <video src="videos/video.mp4" preload="metadata" class="video embed-responsive-item" controls></video>
+
+</div>
+```
+
+
+### Bootstrap 5 Example
+
+```html
+<div class="responsive-video-poster ratio ratio-16x9">
+                
+  <button class="video-overlay" aria-label="Play video">
+    <div class="poster-btn"><svg class="poster-btn-icon"> ... </svg></div>
+
+    <img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster img-fluid">
+  </button>
+
+  <video src="videos/video.mp4" preload="metadata" class="video" controls></video>
 
 </div>
 ```
