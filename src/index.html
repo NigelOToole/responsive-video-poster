@@ -17,7 +17,7 @@
     <header class="header">
       <div class="container">
 
-        <h1 class="logo-text">Responsive Video Poster</h1> 
+        <h1 class="h2 logo-text">Responsive Video Poster</h1> 
 
         <nav class="header-links">
           <a href="https://github.com/NigelOToole/responsive-video-poster/archive/master.zip" class="btn-demo btn-demo--white">Download</a>
@@ -29,10 +29,13 @@
 
     <div class="fullwidth intro">
       <div class="container separator">
-        <h2>Responsive poster image for videos to improve performance and allow full control of video placeholders.</h2>
+        <h2>Take control of video placeholders with a responsive image and full styling control.</h2>
 
         <p>
-          Video elements only allow one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.
+          Video elements only allow one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image element as the poster which allows the use of responsive image techniques. This also gives full styling control of video placeholders.
+        </p>
+
+        <p>Performance optimizations are also included for loading of both native and embedded videos. Third-party embedded videos are lazy loaded when the user interacts with the video.
         </p>
         
       </div>
@@ -44,8 +47,8 @@
 
         <div class="row">
           <div class="col-md-4"> 
-            <h3>&lt;video&gt; and &lt;img&gt;</h3>
-            <p>The default setup with the poster as the first frame of the video.</p>
+            <h3>Image and Video</h3>
+            <p>The default setup for the plugin.</p>
           </div>
 
           <div class="col-md-8">
@@ -57,7 +60,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </span>
 
-                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy">
+                <img srcset="images/720/coverr-lago-di-braies-1571919374360.jpg 720w, images/1080/coverr-lago-di-braies-1571919374360.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/coverr-lago-di-braies-1571919374360.jpg" class="poster" alt="Lake Braies, Italy" loading="lazy">
               </button>
 
               <video src="videos/coverr-lago-di-braies-1571919374360.mp4" preload="auto" class="video" controls playsinline></video>
@@ -77,8 +80,8 @@
 
         <div class="row">
           <div class="col-md-4"> 
-            <h3>&lt;video&gt; and &lt;picture&gt;</h3>
-            <p>The picture element is used for the poster and the video controls are hidden while transitioning the overlay. The poster is the last frame of the video.</p>
+            <h3>Picture and Video</h3>
+            <p>The picture element is used for the poster. The poster is the last frame of the video.</p>
           </div>
 
           <div class="col-md-8">
@@ -93,7 +96,7 @@
                 <picture>
                   <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.webp 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.webp 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/webp">
                   <source srcset="images/720/coverr-lofoten-rocks-1576261169444-last-frame.jpg 720w, images/1080/coverr-lofoten-rocks-1576261169444-last-frame.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" type="image/jpg">
-                  <img src="images/1080/coverr-lofoten-rocks-1576261169444-last-frame.jpg" class="poster" alt="Mountains in Lofoten, Norway" >
+                  <img src="images/1080/coverr-lofoten-rocks-1576261169444-last-frame.jpg" class="poster" alt="Mountains in Lofoten, Norway" loading="lazy">
                 </picture>
               </button>
 
@@ -104,7 +107,6 @@
           </div>
         </div>
 
-
       </div>
     </div>
 
@@ -114,11 +116,10 @@
     <div class="fullwidth">
       <div class="container separator">
 
-
         <div class="row">
           <div class="col-md-4">        
-            <h3>&lt;iframe&gt; and &lt;img&gt;</h3>
-            <p>The iframe includes an empty srcdoc attribute which prevents the video site from loading it's scripts until the user clicks on the video. The poster is the middle frame of the video.</p>
+            <h3>Image and Iframe</h3>
+            <p>Embedded video from third-party sites e.g. Youtube, Vimeo, etc. The poster is the middle frame of the video.</p>
           </div>
 
           <div class="col-md-8">
@@ -130,10 +131,10 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="poster-btn-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 </span>
 
-                <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains">
+                <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 66vw, (min-width: 1200px) 728px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="poster" alt="Drone Grand Tour footage of the Tustan Karpaty mountains" loading="lazy">
               </button>
 
-              <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4?rel=0" srcdoc="" class="video" title="Drone Grand Tour footage of the Tustan Karpaty mountains"></iframe>
+              <iframe src="https://www.youtube-nocookie.com/embed/FjPvaGt6Pw4?rel=0" srcdoc="" class="video" title="Drone Grand Tour footage of the Tustan Karpaty mountains"></iframe>
             </div>
 
           </div>
@@ -165,31 +166,12 @@
 
           <p>The script is an ES6(ES2015) module but the compiled version is included in the build as "src/scripts/responsive-video-poster-umd.js". You can also copy "src/scripts/responsive-video-poster.js" into your own site if your build process can accommodate ES6 modules.</p>
 
-<pre><code>import ResponsiveVideoPoster from 'responsive-video-poster.js';
+<pre><code>import ResponsiveVideoPoster from 'responsive-video-poster';
 
-// Init with string - default setup for one instance
-const responsiveVideoPosterDefault = ResponsiveVideoPoster({ selector: '#responsive-video-poster--default' });
-
-
-// Init by loop - this wont allow access to methods
-const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
-
-for (const item of responsiveVideoPosterElements) {
-  ResponsiveVideoPoster({ selector: item });
-}
-
-
-// Init with all options at default setting
-const responsiveVideoPosterDefault = ResponsiveVideoPoster({
-  selector: '.responsive-video-poster',
-  overlaySelector: '.video-overlay',
-  posterSelector: '.poster',
-  videoSelector: '.video',
-  animClass: 'is-anim',
-  inactiveClass: 'is-inactive',
-  embedPreload: 500,
-  hideControls: false
+const responsiveVideoPosterDefault = ResponsiveVideoPoster({ 
+  selector: '#responsive-video-poster--default' 
 });
+
 </code></pre>
 
         <h3>Options</h3>
@@ -205,7 +187,7 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
           <tr>
             <td><code>selector</code></td>
             <td>'.responsive-video-poster'</td>
-            <td>String</td>
+            <td>String or Element</td>
             <td>Container element selector.</td>
           </tr>
           <tr>
@@ -239,16 +221,22 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
             <td>CSS class to hide the video overlay.</td>
           </tr>
           <tr>
-            <td><code>embedPreload</code></td>
-            <td>500</td>
-            <td>Integer(ms)</td>
-            <td>Amount of time given to preload an embedded video.</td>
+            <td><code>playDelay</code></td>
+            <td>0</td>
+            <td>Integer(ms) or 'transition'</td>
+            <td>Delay playing the video by set time or wait for the overlay transition to finish.</td>
           </tr>
           <tr>
-            <td><code>hideControls</code></td>
+            <td><code>hideControlsOnLoad</code></td>
             <td>false</td>
             <td>Boolean</td>
             <td>Hide video controls while transitioning overlay.</td>
+          </tr>
+          <tr>
+            <td><code>preConnections</code></td>
+            <td>[]</td>
+            <td>Array</td>
+            <td>Domains to pre-connect to for loading an embedded video.</td>
           </tr>
         </table>
         </div>
@@ -300,18 +288,17 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 </code></pre>
 
 
-          <h3>Bootstrap Example</h3>
+          <h4>Bootstrap 4 Example</h4>
 
-<pre><code>&lt;div class="responsive-video-poster embed-responsive embed-responsive-16by9"&gt;
-                
-  &lt;button class="video-overlay embed-responsive-item" aria-label="Play video"&gt;
-    &lt;div class="poster-btn"&gt;&lt;svg class="poster-btn-icon"&gt; ... &lt;/svg&gt;&lt;/div&gt;
+<pre><code>&lt;div class="responsive-video-poster embed-responsive embed-responsive-16by9"&gt;             
+  ...
+&lt;/div&gt;
+</code></pre>
 
-    &lt;img srcset="images/720/image.jpg 720w, images/1080/image.jpg 1080w" src="images/1080/image.jpg" class="poster img-fluid"&gt;
-  &lt;/button&gt;
+          <h4>Bootstrap 5 Example</h4>
 
-  &lt;video src="videos/video.mp4" preload="metadata" class="video embed-responsive-item" controls&gt;&lt;/video&gt;
-
+<pre><code>&lt;div class="responsive-video-poster ratio ratio-16x9"&gt;              
+  ...
 &lt;/div&gt;
 </code></pre>
 
@@ -319,9 +306,14 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
 
 
         <div class="subsection">
-          <h2>Video loading optimizations</h2>
+          <h2>Performance optimizations</h2>
 
-          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload="metadata" and the embedded video includes an <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">srcdoc=""</a> so the video is not loaded until the user interacts with it. This will slow the loading of embedded videos which is partially addressed by the built in embedPreload in the options. This will reduce the initial page load but may increase lag in playback for some users. Both can be removed if not needed. The plugin should also work normally with lazy load plugins.</p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank" rel="noopener">Responsive image techniques(srcset, sizes, source, etc)</a> are used to load the most appropriate image. <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading" target="_blank" rel="noopener">Native lazy loading</a> is used on the responsive poster image to reduce initial page load. The plugin should also work normally with lazy load plugins.</p>
+
+          <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank" rel="noopener">video element</a> includes preload="metadata" so the video is not loaded until the user interacts with it. This will reduce the initial page load but may create lag in playback for some users. This can be removed if not needed.
+          </p>
+
+          <p>The embedded video includes <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">srcdoc=""</a> so the video and third-party scripts are not loaded until the user interacts with it. The 'preConnections' option can be used to pass domains to start <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect" target="_blank" rel="noopener">pre-connect</a> connections for loading an embedded video. this happens when the user hovers/taps on the video using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/pointerover_event" target="_blank" rel="noopener">pointerover event</a>. For example Youtube could use ['https://www.youtube.com', 'https://www.google.com'].</p>
         </div>
 
 
@@ -363,8 +355,8 @@ $ gulp serve
 
         <div class="subsection">
           <h3>Credits</h3>
-          Covverr videos of <a href="https://coverr.co/videos/lago-di-braies-y1yBShzUTZ" target="_blank" rel="noopener">Lago di braies</a> and <a href="https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG" target="_blank" rel="noopener">Lofoten rocks</a>. Youtube video of <a href="https://www.youtube.com/watch?v=FjPvaGt6Pw4" target="_blank" rel="noopener">Tustan Karpaty mountains</a>.<br>
-          <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">Lazy loading of an embedded video</a> by Arthur Corenzan. 
+          <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g" target="_blank" rel="noopener">Lazy loading of an embedded video</a> by Arthur Corenzan. <a href="https://web.dev/third-party-facades/" target="_blank" rel="noopener">Lazy load third-party resources with facades</a>. <br>
+          Covverr videos of <a href="https://coverr.co/videos/lago-di-braies-y1yBShzUTZ" target="_blank" rel="noopener">Lago di braies</a> and <a href="https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG" target="_blank" rel="noopener">Lofoten rocks</a>. Youtube video of <a href="https://www.youtube.com/watch?v=FjPvaGt6Pw4" target="_blank" rel="noopener">Tustan Karpaty mountains</a>.
         </div>
 
       </div>

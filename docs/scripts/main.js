@@ -6,32 +6,33 @@ const responsiveVideoPosterDefault = ResponsiveVideoPoster({
   selector: '#responsive-video-poster--default' 
 });
 
-// Init with string and options
+// Init with string and playback delayed
 const responsiveVideoPosterPicture = ResponsiveVideoPoster({ 
   selector: '#responsive-video-poster--picture', 
-  hideControls: true 
+  playDelay: 'transition'
 });
 
-// Init with element
+// Init with element and pre connections for Youtube
 const responsiveVideoPosterIframeElement = document.querySelector('#responsive-video-poster--iframe');
-const responsiveVideoPosterIframe = ResponsiveVideoPoster({ selector: responsiveVideoPosterIframeElement });
+
+const responsiveVideoPosterIframe = ResponsiveVideoPoster({ 
+  selector: responsiveVideoPosterIframeElement,
+  preConnections: ['https://www.youtube.com', 'https://www.google.com']
+});
+
 
 // Init with loop - this wont allow access to methods
 // const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
 
 // for (const item of responsiveVideoPosterElements) {
 //   ResponsiveVideoPoster({ selector: item });
-// }  
-
+// }
 
 
 // Methods
-// setTimeout(() => {
-  // responsiveVideoPosterDefault.playVideo();
-  // console.log(responsiveVideoPosterDefault['elements']);
-  // console.log(responsiveVideoPosterDefault['elements']['video']);
-// }, 500);
-
+// responsiveVideoPosterDefault.playVideo();
+// console.log(responsiveVideoPosterDefault['elements']);
+// console.log(responsiveVideoPosterDefault['elements']['video']);
 
 
 // Event listener - this can be attached to an element or the document

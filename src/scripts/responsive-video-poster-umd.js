@@ -18,17 +18,24 @@
   });
   _exports["default"] = void 0;
 
+  function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
   /**
     Responsive poster image for videos
   
-    @param {string} selector - Container element selector.
+    @param {string || element} selector - Container element selector.
     @param {string} overlaySelector - Overlay element selector.
     @param {string} posterSelector - Poster element selector.
     @param {string} videoSelector - Video element selector.
     @param {string} animClass - CSS class to transition the video overlay between states.
     @param {string} inactiveClass - CSS class to hide the video overlay.
-    @param {integer} embedPreload - Amount of time given to preload an embedded video.
-    @param {boolean} hideControls - Hide video controls while transitioning overlay.
+    @param {integer(ms) || 'transition'} playDelay - Delay playing the video by set time or wait for the overlay transition to finish.
+    @param {boolean} hideControlsOnLoad - Hide video controls while transitioning overlay.
+    @param {array} preConnections - Domains to pre-connect to for loading an embedded video.
   */
   var ResponsiveVideoPoster = function ResponsiveVideoPoster() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -44,10 +51,12 @@
         animClass = _ref$animClass === void 0 ? 'is-anim' : _ref$animClass,
         _ref$inactiveClass = _ref.inactiveClass,
         inactiveClass = _ref$inactiveClass === void 0 ? 'is-inactive' : _ref$inactiveClass,
-        _ref$embedPreload = _ref.embedPreload,
-        embedPreload = _ref$embedPreload === void 0 ? 500 : _ref$embedPreload,
-        _ref$hideControls = _ref.hideControls,
-        hideControls = _ref$hideControls === void 0 ? false : _ref$hideControls;
+        _ref$playDelay = _ref.playDelay,
+        playDelay = _ref$playDelay === void 0 ? 0 : _ref$playDelay,
+        _ref$hideControlsOnLo = _ref.hideControlsOnLoad,
+        hideControlsOnLoad = _ref$hideControlsOnLo === void 0 ? true : _ref$hideControlsOnLo,
+        _ref$preConnections = _ref.preConnections,
+        preConnections = _ref$preConnections === void 0 ? [] : _ref$preConnections;
 
     var element;
     var overlay;
@@ -73,6 +82,30 @@
         detail: eventDetail
       });
       element.dispatchEvent(event);
+    };
+
+    var addPrefetch = function addPrefetch(kind, url) {
+      var linkElement = document.createElement('link');
+      linkElement.rel = kind;
+      linkElement.href = url;
+      document.head.append(linkElement);
+    };
+
+    var warmConnections = function warmConnections() {
+      var _iterator = _createForOfIteratorHelper(preConnections),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var item = _step.value;
+          var connectionExists = document.querySelector("link[rel=\"preconnect\"][href=\"".concat(item, "\"]"));
+          if (!connectionExists) addPrefetch('preconnect', item);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     }; // Methods
 
 
@@ -81,8 +114,7 @@
         action: 'start'
       });
       var transitionDuration = getTransitionDuration(overlay);
-      var embedTransitionDuration = transitionDuration <= embedPreload ? 0 : transitionDuration - embedPreload;
-      if (embedTransitionDuration < 50) embedTransitionDuration = 50;
+      if (playDelay === 'transition') playDelay = transitionDuration;
       overlay.classList.add(animClass);
       video.setAttribute('aria-hidden', false);
       video.setAttribute('tabindex', 0);
@@ -92,15 +124,15 @@
         video.setAttribute('preload', 'auto');
         setTimeout(function () {
           video.play();
-          if (videoControls && hideControls) video.setAttribute('controls', '');
-        }, transitionDuration);
+          if (videoControls && hideControlsOnLoad) video.setAttribute('controls', '');
+        }, playDelay);
       } else {
+        if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
         var videoSrc = video.getAttribute('src');
         video.setAttribute('src', '');
-        if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
         setTimeout(function () {
           video.setAttribute('src', "".concat(addParameterToURL(videoSrc, 'autoplay=1')));
-        }, embedTransitionDuration);
+        }, playDelay);
       }
 
       setTimeout(function () {
@@ -113,12 +145,16 @@
       }, transitionDuration);
     };
 
-    var addDocumentEventListener = function addDocumentEventListener(targetSelector, targetElement) {
+    var addEventListeners = function addEventListeners(targetSelector, targetElement) {
       document.addEventListener('click', function (event) {
-        var target = event.target.closest(targetSelector) === targetElement;
-        if (!target) return;
+        if (event.target.closest(targetSelector) !== targetElement) return;
         event.preventDefault();
         playVideo();
+      });
+      targetElement.addEventListener('pointerover', function (event) {
+        warmConnections();
+      }, {
+        once: true
       });
     };
 
@@ -130,12 +166,12 @@
       video.setAttribute('aria-hidden', true);
       video.setAttribute('tabindex', -1);
 
-      if (hideControls) {
+      if (hideControlsOnLoad) {
         videoControls = video.getAttribute('controls') === '';
         if (videoControls) video.removeAttribute('controls');
       }
 
-      addDocumentEventListener(overlaySelector, overlay);
+      addEventListeners(overlaySelector, overlay);
     };
 
     var init = function init() {

@@ -1,14 +1,15 @@
 /**
   Responsive poster image for videos
 
-  @param {string} selector - Container element selector.
+  @param {string || element} selector - Container element selector.
   @param {string} overlaySelector - Overlay element selector.
   @param {string} posterSelector - Poster element selector.
   @param {string} videoSelector - Video element selector.
   @param {string} animClass - CSS class to transition the video overlay between states.
   @param {string} inactiveClass - CSS class to hide the video overlay.
-  @param {integer} embedPreload - Amount of time given to preload an embedded video.
-  @param {boolean} hideControls - Hide video controls while transitioning overlay.
+  @param {integer(ms) || 'transition'} playDelay - Delay playing the video by set time or wait for the overlay transition to finish.
+  @param {boolean} hideControlsOnLoad - Hide video controls while transitioning overlay.
+  @param {array} preConnections - Domains to pre-connect to for loading an embedded video.
 */
 
 const ResponsiveVideoPoster = function(
@@ -19,8 +20,9 @@ const ResponsiveVideoPoster = function(
     videoSelector = '.video',
     animClass = 'is-anim',
     inactiveClass = 'is-inactive',
-    embedPreload = 500,
-    hideControls = false
+    playDelay = 0,
+    hideControlsOnLoad = true,
+    preConnections = []
 	} = {}) {
 
   let element;
@@ -53,6 +55,20 @@ const ResponsiveVideoPoster = function(
     element.dispatchEvent(event);
   };
 
+  const addPrefetch = function(kind, url) {
+    const linkElement = document.createElement('link');
+    linkElement.rel = kind;
+    linkElement.href = url;
+    document.head.append(linkElement);
+  }
+
+  const warmConnections = function() {
+    for (const item of preConnections) {
+      let connectionExists = document.querySelector(`link[rel="preconnect"][href="${item}"]`);
+      if(!connectionExists) addPrefetch('preconnect', item);
+    }  
+  }
+
 
 
   // Methods
@@ -60,8 +76,7 @@ const ResponsiveVideoPoster = function(
     fireEvent(element, 'playVideo', { action: 'start' });
     
     let transitionDuration = getTransitionDuration(overlay);
-    let embedTransitionDuration = (transitionDuration <= embedPreload) ? 0 : transitionDuration - embedPreload;
-    if (embedTransitionDuration < 50) embedTransitionDuration = 50;
+    if (playDelay === 'transition') playDelay = transitionDuration;
 
 		overlay.classList.add(animClass);
     video.setAttribute('aria-hidden', false);
@@ -73,18 +88,18 @@ const ResponsiveVideoPoster = function(
 
       setTimeout(() => {
         video.play();
-        if(videoControls && hideControls) video.setAttribute('controls', '');
-      }, transitionDuration);
+        if(videoControls && hideControlsOnLoad) video.setAttribute('controls', '');
+      }, playDelay);
     }
     else {
+      if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
+
       let videoSrc = video.getAttribute('src');
       video.setAttribute('src', '');
 
-      if (video.getAttribute('srcdoc') === '') video.removeAttribute('srcdoc');
-
       setTimeout(() => {
         video.setAttribute('src', `${addParameterToURL(videoSrc, 'autoplay=1')}`);
-      }, embedTransitionDuration);
+      }, playDelay);
     }
 
 		setTimeout(() => {
@@ -98,15 +113,17 @@ const ResponsiveVideoPoster = function(
   };
 
 
-  const addDocumentEventListener = function(targetSelector, targetElement) {
+  const addEventListeners = function(targetSelector, targetElement) {
     document.addEventListener('click', function(event) {
-
-      let target = (event.target.closest(targetSelector) === targetElement);
-      if (!target) return;
+      if(event.target.closest(targetSelector) !== targetElement) return;
 
       event.preventDefault();
       playVideo();
     });
+
+    targetElement.addEventListener('pointerover', function(event) {
+      warmConnections();
+    }, { once: true });   
   };
 
 
@@ -119,12 +136,12 @@ const ResponsiveVideoPoster = function(
     video.setAttribute('aria-hidden', true);
     video.setAttribute('tabindex', -1);
 
-    if(hideControls) {
+    if(hideControlsOnLoad) {
       videoControls = (video.getAttribute('controls') === '');
       if(videoControls) video.removeAttribute('controls');
     }
 
-    addDocumentEventListener(overlaySelector, overlay);
+    addEventListeners(overlaySelector, overlay);
   };
 
 

@@ -57,6 +57,7 @@
       background: #000;
       opacity: .8;
       transition: all .3s; 
+      pointer-events: none;
 
       .video-overlay:hover & {
         opacity: 1;
@@ -77,6 +78,7 @@
     z-index: 20;
     max-width: 100%;
     height: auto;
+    pointer-events: none;
   }
 
   // If the poster image is not the same size as the video these classes can be used to fill the space

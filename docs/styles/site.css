@@ -363,50 +363,38 @@ a:hover, a:focus {
   color: #2196F3;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
   line-height: 1.2;
   font-weight: 300;
-}
-
-h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
-  font-size: 60%;
-}
-
-h1, h2 {
-  margin: 0 0 1.5rem 0;
-}
-
-h3 {
   margin: 0 0 1rem 0;
 }
 
-h4, h5, h6 {
-  margin: 0 0 .5rem 0;
-  font-weight: 400;
+h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 small, h5 small, .h5 small {
+  font-size: 60%;
 }
 
-h1 {
+h1, .h1, h2, .h2 {
+  margin: 0 0 1.5rem 0;
+}
+
+h1, .h1 {
+  font-size: 3rem;
+}
+
+h2, .h2 {
   font-size: 2.5rem;
 }
 
-h2 {
+h3, .h3 {
   font-size: 2rem;
 }
 
-h3 {
-  font-size: 1.75rem;
-}
-
-h4 {
+h4, .h4 {
   font-size: 1.5rem;
 }
 
-h5 {
+h5, .h5 {
   font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1rem;
 }
 
 p {
@@ -414,7 +402,7 @@ p {
 }
 
 strong, th {
-  font-weight: 800;
+  font-weight: 600;
 }
 
 pre, code {
@@ -581,23 +569,12 @@ pre {
   margin-left: -15px;
 }
 
-.col-sm-4, .col-sm-8, .col-md-4, .col-md-8 {
+.col-md-4, .col-md-8 {
   position: relative;
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
   min-height: 1px;
-}
-
-@media (min-width: 576px) {
-  .col-sm-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
-  .col-sm-8 {
-    flex: 0 0 66.666667%;
-    max-width: 66.666667%;
-  }
 }
 
 @media (min-width: 768px) {
