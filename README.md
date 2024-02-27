@@ -1,7 +1,7 @@
 # Responsive Video Poster
-### Responsive poster image for videos to improve performance and allow full control of video placeholders.
+### Custom video placeholder with lazy load for better performance
 
-Video elements only allow one image as the poster, which is not optimal for performance. This JavaScript plugin uses a standard image tag as the poster. This means standard responsive image techniques can be used to load only the most appropriate image. This also gives full styling control of video placeholders. Performance optimizations are also included for loading of both native and embedded videos.
+Full styling control of video placeholders with an image/picture used for the poster which allows the use of src-set. Videos and embeds are lazy loaded to reduce page load and embeds are prefetched on user interaction to improve performance.
 
 ### [Demo and documentation](http://nigelotoole.github.io/responsive-video-poster/)
 
