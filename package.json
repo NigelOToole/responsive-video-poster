@@ -1,9 +1,22 @@
 {
   "name": "responsive-video-poster",
-  "description": "Responsive poster image for videos to improve performance and allow full control of video placeholders.",
-  "version": "2.0.0",
-  "main": "src/scripts/responsive-video-poster-umd.js",
-  "esnext": "src/scripts/responsive-video-poster.js",
+  "homepage": "https://nigelotoole.github.io/responsive-video-poster/",
+  "author": "Nigel O Toole <pure@purestructure.com> (http://www.purestructure.com)",
+  "description": "Custom video placeholder with lazy load for better performance",
+  "keywords": [
+    "video",
+    "poster",
+    "responsive",
+    "performance",
+    "javascript"  
+  ],
+
+  "version": "3.0.0",
+  "main": "src/scripts/responsive-video-poster.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NigelOToole/responsive-video-poster.git"
@@ -11,41 +24,29 @@
   "bugs": {
     "url": "https://github.com/NigelOToole/responsive-video-poster/issues"
   },
-  "homepage": "https://nigelotoole.github.io/responsive-video-poster/",
-  "author": "Nigel O Toole <pure@purestructure.com> (http://www.purestructure.com)",
-  "license": "MIT",
-  "keywords": [
-    "javascript",
-    "es6",
-    "module",
-    "video",
-    "poster",
-    "responsive",
-    "performance"
+
+  "browserslist": [
+    "defaults"
   ],
-  "engines": {
-    "node": ">=4"
-  },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-transform-modules-umd": "^7.9.0",
-    "@babel/preset-env": "^7.9.6",
-    "autoprefixer": "^9.8.0",
-    "browser-sync": "^2.26.7",
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-cli": "^2.2.1",
-    "gulp-load-plugins": "^1.6.0",
-    "gulp-plumber": "^1.0.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.2.0"
+    "@11ty/eleventy-dev-server": "^1.0.4",
+    "concurrently": "^8.2.1",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "postcss-custom-media": "^10.0.2",
+    "postcss-import": "^15.1.0",
+    "postcss-preset-env": "^9.1.4",
+    "rimraf": "^5.0.5"
   },
   "scripts": {
-    "start": "gulp serve",
-    "build": "gulp build",
-    "publishNpm": "gulp compile && npm publish"
+    "clean": "rimraf src/**/*.map",
+    "dev": "cross-env NODE_ENV=development && concurrently \"npm:dev:*\"",
+    "dev:server": "npx @11ty/eleventy-dev-server --dir=src",
+    "dev:styles": "postcss src/styles/site/main.css src/styles/responsive-video-poster/responsive-video-poster.css --dir src/styles --watch",
+    "build": "npm run clean && cross-env NODE_ENV=production concurrently \"npm:build:*\"",
+    "build:styles": "postcss src/styles/site/main.css src/styles/responsive-video-poster/responsive-video-poster.css --dir src/styles",
+    "publish": "npm run build && npm publish"
   }
+
 }

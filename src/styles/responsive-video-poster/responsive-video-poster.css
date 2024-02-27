@@ -11,7 +11,7 @@
   aspect-ratio: 16 / 9;
 }
 
-.rvp-placeholder {
+  .rvp-placeholder {
     position: absolute; 
     top: 0;
     left: 0;
@@ -26,21 +26,21 @@
     padding: 0;
     background: none;
     border: 0;
-  }
 
-.is-anim .rvp-placeholder {
+    .is-anim & {
       opacity: 0;
     }
 
-.is-active .rvp-placeholder {
+    .is-active & {
       display: none;
     }
 
-.rvp-placeholder:not(:has(.rvp-poster)) {
+    &:not(:has(.rvp-poster)) {
       background: radial-gradient(circle, #28d1b4 10%, #0157ff 80%);
     }
+  }
 
-.rvp-button {
+    .rvp-button {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -55,13 +55,13 @@
       border: 2px solid #fff;
       transition: all .3s; 
       pointer-events: none;
-    }
 
-:hover > .rvp-button {
+      :hover > & {
         background: #0034a3;
       }
+    }
 
-.rvp-button-icon {
+      .rvp-button-icon {
         width: 1em;
         height: 1em;
         fill: currentColor;
@@ -69,31 +69,29 @@
         translate: 2px 0;
       }
 
-.rvp-poster {
+
+      .rvp-poster {
 
       }
 
-/* If the poster image is not the same size as the video these classes can be used to fill the space */
-
-.rvp-poster--cover, .rvp-poster--contain {
+      /* If the poster image is not the same size as the video these classes can be used to fill the space */
+      .rvp-poster--cover, .rvp-poster--contain {
         width: 100%;
         height: 100%;
       }
 
-.rvp-poster--cover {
-        -o-object-fit: cover;
-           object-fit: cover;
+      .rvp-poster--cover {
+        object-fit: cover;
       }
 
-.rvp-poster--contain {
-        -o-object-fit: contain;
-           object-fit: contain;
+      .rvp-poster--contain {
+        object-fit: contain;
       }
 
-.rvp-video {
+
+  .rvp-video {
     border: 0;
     aspect-ratio: inherit;
     background: #000;
   }
   
-/*# sourceMappingURL=responsive-video-poster.css.map */

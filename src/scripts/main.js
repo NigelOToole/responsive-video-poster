@@ -1,27 +1,34 @@
-import ResponsiveVideoPoster from './responsive-video-poster.js';
+// import { ShareUrl } from './share-url.js';
+import { ShareUrl } from './share-url-wc.js';
+import { ResponsiveVideoPoster, ResponsiveVideoPosterAuto } from './responsive-video-poster.js';
+import { ResponsiveVideoPoster as ResponsiveVideoPosterWC } from './responsive-video-poster-wc.js';
 
 
-// Init with string
+window.addEventListener('DOMContentLoaded', (event) => {
+
+// Init
 const responsiveVideoPosterDefault = ResponsiveVideoPoster({ 
-  selector: '#responsive-video-poster--default' 
+  selector: '#responsive-video-poster--default'
 });
 
-// Init with string and playback delayed
-const responsiveVideoPosterPicture = ResponsiveVideoPoster({ 
-  selector: '#responsive-video-poster--picture', 
-  playDelay: 'transition'
+// const responsiveVideoPosterPicture = ResponsiveVideoPoster({ 
+//   selector: '#responsive-video-poster--picture'
+// });
+
+// Embed
+const responsiveVideoPosterEmbedElement = document.querySelector('#responsive-video-poster--embed');
+
+const responsiveVideoPosterEmbed = ResponsiveVideoPoster({
+  selector: responsiveVideoPosterEmbedElement,
+  playDelayOffset: 250
 });
 
-// Init with element and pre connections for Youtube
-const responsiveVideoPosterIframeElement = document.querySelector('#responsive-video-poster--iframe');
-
-const responsiveVideoPosterIframe = ResponsiveVideoPoster({ 
-  selector: responsiveVideoPosterIframeElement,
-  preConnections: ['https://www.youtube.com', 'https://www.google.com']
+const responsiveVideoPosterNoImage = ResponsiveVideoPoster({ 
+  selector: '#responsive-video-poster--no-image'
 });
 
 
-// Init with loop - this wont allow access to methods
+// // Init with loop - this wont allow access to methods
 // const responsiveVideoPosterElements = document.querySelectorAll('.responsive-video-poster');   
 
 // for (const item of responsiveVideoPosterElements) {
@@ -32,7 +39,7 @@ const responsiveVideoPosterIframe = ResponsiveVideoPoster({
 // Methods
 // responsiveVideoPosterDefault.playVideo();
 // console.log(responsiveVideoPosterDefault['elements']);
-// console.log(responsiveVideoPosterDefault['elements']['video']);
+// console.log(responsiveVideoPosterDefault.getInfo());
 
 
 // Event listener - this can be attached to an element or the document
@@ -43,3 +50,22 @@ const responsiveVideoPosterIframe = ResponsiveVideoPoster({
 // document.addEventListener('playVideo', (event) => { 
 //   console.log(`Target: ${event.target.matches('#responsive-video-poster--default')}`, `Action: ${event.detail.action}`);
 // });
+
+
+
+  // Share links
+  // const elements = document.querySelectorAll('.share-url');
+	// for (const item of elements) {
+	// 	ShareUrl({ selector: item, textSelector: 'span' });
+	// };
+  
+  // Encoded text
+  const encodeElements = document.querySelectorAll('.encode');
+  for (const item of encodeElements) {
+    let decode = atob(item.dataset['encode']);
+
+    if (item.dataset['encodeAttribute']) {
+      item.setAttribute(`${item.dataset['encodeAttribute']}`, `${decode}`);
+    }
+  }
+});
