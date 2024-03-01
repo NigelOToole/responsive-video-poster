@@ -8,8 +8,8 @@ class ShareUrl extends HTMLElement {
   };
 
   camelCase(name, delim = '-') {
-    const pattern = new RegExp((delim + "([a-z])"), "g")
-    return name.replace(pattern, (match, capture) => capture.toUpperCase())
+    const pattern = new RegExp((delim + "([a-z])"), "g");
+    return name.replace(pattern, (match, capture) => capture.toUpperCase());
   };
 
 
@@ -26,6 +26,7 @@ class ShareUrl extends HTMLElement {
       textLabel: '',
       textSuccess: 'Shared',
       successClass: 'is-active',
+      maintainSize: true
     }  
 
 		for (const item of this.getAttributeNames()) {
@@ -64,7 +65,9 @@ class ShareUrl extends HTMLElement {
         await navigator.clipboard.writeText(this.options.url);
       }
 
+      let textWidth = this.textElement.offsetWidth;
       this.textElement.innerText = this.options.textSuccess;
+      if (this.options.maintainSize) this.textElement.style.width = `${Math.max(textWidth, this.textElement.offsetWidth)}px`;
       this.button.classList.add(this.options.successClass);
     } 
     catch (error) {

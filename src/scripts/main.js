@@ -51,13 +51,6 @@ const responsiveVideoPosterNoImage = ResponsiveVideoPoster({
 //   console.log(`Target: ${event.target.matches('#responsive-video-poster--default')}`, `Action: ${event.detail.action}`);
 // });
 
-
-
-  // Share links
-  // const elements = document.querySelectorAll('.share-url');
-	// for (const item of elements) {
-	// 	ShareUrl({ selector: item, textSelector: 'span' });
-	// };
   
   // Encoded text
   const encodeElements = document.querySelectorAll('.encode');

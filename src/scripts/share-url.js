@@ -8,6 +8,7 @@ const ShareUrl = function (args) {
     textLabel: '',
     textSuccess: 'Shared',
     successClass: 'is-active',
+    maintainSize: true
 	}
 
 	let options = {...defaults, ...args};
@@ -34,7 +35,9 @@ const ShareUrl = function (args) {
         await navigator.clipboard.writeText(options.url);
       }
 
+      let textWidth = textElement.offsetWidth;
       textElement.innerText = options.textSuccess;
+      if (options.maintainSize) textElement.style.width = `${Math.max(textWidth, textElement.offsetWidth)}px`;
       element.classList.add(options.successClass);
     } 
     catch (error) {

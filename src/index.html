@@ -223,9 +223,16 @@
 
           <h2>Usage</h2>
 
-          <h3>JavaScript</h3>
+          <p>Import the files into your project, add the elements to your markup and initialize the plugin if using the JS version.</p>
 
-          <p>Import the JS into your build process or add the script tag to the page.</p>
+          <ul>
+            <li><strong>JS:</strong> <code>node_modules/responsive-video-poster/src/scripts/responsive-video-poster.js</code></li>
+            <li><strong>Web Component:</strong> <code>node_modules/responsive-video-poster/src/scripts/responsive-video-poster-wc.js</code></li>
+            <li><strong>CSS:</strong> <code>node_modules/responsive-video-poster/src/styles/responsive-video-poster/responsive-video-poster.css</code></li>
+            <li><strong>Compiled CSS:</strong> <code>node_modules/responsive-video-poster/src/styles/responsive-video-poster.css</code></li>
+          </ul>
+
+          <h3>JavaScript</h3>
 
 <pre><code class="scroll-shadow-inline" tabindex="0">import { ResponsiveVideoPoster, ResponsiveVideoPosterAuto } from 'responsive-video-poster.js';
 
@@ -352,15 +359,6 @@ ResponsiveVideoPosterAuto();
           </div>
 
 
-          <h3>Import styles</h3>
-
-<pre><code class="scroll-shadow-inline" tabindex="0">@import "node_modules/responsive-video-poster/src/styles/responsive-video-poster/responsive-video-poster.css";</code></pre>          
-
-          <p>The compiled version.</p>
-
-<pre><code class="scroll-shadow-inline" tabindex="0">@import "node_modules/responsive-video-poster/src/styles/responsive-video-poster.css";</code></pre>
-
-
           <h3>Markup</h3>
 
 <pre><code class="scroll-shadow-inline" tabindex="0">&lt;div class="responsive-video-poster"&gt;
@@ -368,7 +366,7 @@ ResponsiveVideoPosterAuto();
   &lt;button class="rvp-placeholder" aria-label="Play video"&gt;
     &lt;span class="rvp-button" aria-hidden="true"&gt;&lt;svg class="rvp-button-icon"&gt; ... &lt;/svg&gt;&lt;/span&gt;
 
-    &lt;img srcset="images/720.jpg 720w, images/1080.jpg 1080w" src="images/1080.jpg" class="rvp-poster"  width="1080" height="608" loading="lazy"&gt;
+    &lt;img srcset="images/720.jpg 720w, images/1080.jpg 1080w" src="images/1080.jpg" class="rvp-poster" width="1080" height="608" loading="lazy"&gt;
   &lt;/button&gt;
 
   &lt;video src="videos/video.mp4" class="rvp-video" preload="none" width="1080" height="608"&gt;&lt;/video&gt;
@@ -379,7 +377,7 @@ ResponsiveVideoPosterAuto();
 
           <h3>Web Component</h3>
 
-          <p>As above but with a custom element rather than a div.</p>
+          <p>As above but using a custom element.</p>
 
 <pre><code class="scroll-shadow-inline" tabindex="0">&lt;responsive-video-poster&gt; ... &lt;/responsive-video-poster&gt;
 </code></pre>
@@ -439,20 +437,9 @@ $ npm run dev
 
     <footer class="fullwidth space--sm footer">
       <div class="container content">
+
         <div class="group share">
           <h4 class="share-title">Share this</h4>
-
-          <!-- <button class="btn btn--icon-multi share-url" data-share-action="share">
-            <span>Share link</span> 
-            <svg class="icon" aria-hidden="true" viewbox="0 0 24 24"><path d="m3.293 11.293 1.414 1.414L11 6.414V20h2V6.414l6.293 6.293 1.414-1.414L12 2.586l-8.707 8.707z"/></svg>
-            <svg class="icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="square" stroke-linejoin="arcs"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="none" /><path d="M22 4 12 14.01l-3-3" fill="none"/></svg>
-          </button>
-          
-          <button class="btn btn--icon-multi share-url" data-share-action="clipboard" data-share-text-success="Copied">
-            <span>Copy link</span> 
-            <svg class="icon" aria-hidden="true" viewbox="0 0 24 24"><rect x="8" y="3" width="13" height="13" rx="0" stroke-width="2" stroke-linecap="square" stroke-linejoin="arcs" fill="none"></rect><path d="M4 7v12c0 .6.4 1 1 1h12" stroke-width="2" stroke-linecap="square" stroke-linejoin="arcs" fill="none"></path></svg>
-            <svg class="icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="square" stroke-linejoin="arcs"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="none" /><path d="M22 4 12 14.01l-3-3" fill="none"/></svg>
-          </button> -->
 
           <share-url text-selector="span">
             <button class="btn btn--icon-multi">
@@ -477,13 +464,13 @@ $ npm run dev
           <a data-encode="bWFpbHRvOnB1cmVAcHVyZXN0cnVjdHVyZS5jb20" data-encode-attribute="href" class="encode">Email</a>
           <a href="http://www.purestructure.com" rel="external" class="w-100">PURE STRUCTURE</a>
         </nav>
+
       </div>
     </footer>
 
 
     <script src="scripts/main.js" type="module"></script>
     <!-- <script src="scripts/responsive-video-poster-wc.js" type="module"></script> -->
-    <!-- <script src="scripts/share-url-wc.js" type="module"></script> -->
 
   </body>
 </html>
