@@ -11,7 +11,7 @@
     "javascript"  
   ],
 
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "src/scripts/responsive-video-poster.js",
   "license": "MIT",
   "engines": {
