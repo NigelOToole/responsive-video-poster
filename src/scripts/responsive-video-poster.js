@@ -73,10 +73,6 @@ const ResponsiveVideoPoster = function(args) {
 		return duration;
 	};
 
-  const addParameterToURL = function(url, param){
-    return `${url}${url.split('?')[1] ? '&' : '?'}${param}`
-  };
-
   const addPrefetch = function(kind, url) {
     let connectionExists = document.querySelector(`link[rel="${kind}"][href="${url}"]`);
     if (connectionExists) return;
@@ -136,7 +132,9 @@ const ResponsiveVideoPoster = function(args) {
       video.setAttribute('src', '');
 
       playStart = () => {
-        video.setAttribute('src', `${addParameterToURL(videoSrc, 'autoplay=1')}`);
+        let videoURL = new URL(videoSrc);
+        videoURL.searchParams.append('autoplay', 1);    
+        video.setAttribute('src', videoURL.href);
       };
     }
 

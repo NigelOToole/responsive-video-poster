@@ -30,10 +30,6 @@ class ResponsiveVideoPoster extends HTMLElement {
 		return duration;
 	};
 
-  addParameterToURL(url, param){
-    return `${url}${url.split('?')[1] ? '&' : '?'}${param}`;
-  };
-
   addPrefetch(kind, url) {
     let connectionExists = document.querySelector(`link[rel="${kind}"][href="${url}"]`);
     if (connectionExists) return;
@@ -156,7 +152,9 @@ class ResponsiveVideoPoster extends HTMLElement {
       this.video.setAttribute('src', '');
 
       playStart = () => {
-        this.video.setAttribute('src', `${this.addParameterToURL(videoSrc, 'autoplay=1')}`);
+        let videoURL = new URL(videoSrc);
+        videoURL.searchParams.append('autoplay', 1);    
+        this.video.setAttribute('src', videoURL.href);
       };
     }
 

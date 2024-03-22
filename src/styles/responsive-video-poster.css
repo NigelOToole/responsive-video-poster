@@ -20,7 +20,7 @@
 
     z-index: 40;
     cursor: pointer;
-    transition: all 1.3s ease-in;
+    transition: all .4s ease-in;
 
     /* Reset default button styles */
     padding: 0;
@@ -96,4 +96,3 @@
     background: #000;
   }
   
-/*# sourceMappingURL=responsive-video-poster.css.map */
