@@ -95,4 +95,27 @@
     aspect-ratio: inherit;
     background: #000;
   }
-  
+
+/* JS fallback */
+
+@media (scripting: none) {
+  .rvp-placeholder {
+    display: none;
+  }
+}
+
+responsive-video-poster:defined {
+    /* fallback {
+      display: none;
+    } */
+  }
+
+/* &:has(fallback) {
+      > *:not(fallback) {
+        display: none;
+      } 
+    } */
+
+responsive-video-poster:not(:defined) .rvp-placeholder {
+      display: none;
+    }

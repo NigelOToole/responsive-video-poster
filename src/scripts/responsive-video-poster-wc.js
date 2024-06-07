@@ -1,5 +1,83 @@
 class ResponsiveVideoPoster extends HTMLElement {
 
+  // Setup
+  constructor() {
+    super();
+
+    this.options = {
+      selector: '.responsive-video-poster',
+      placeholderSelector: '.rvp-placeholder',
+      posterSelector: '.rvp-poster',
+      videoSelector: '.rvp-video',
+      animClass: 'is-anim',
+      activeClass: 'is-active',
+      playDelay: 'transition',
+      playDelayOffset: 0,
+      hideControlsOnLoad: true,
+      hideControlsOnFirstPlay: false,
+      preConnections: [],
+    };
+
+    this.hasControls;
+    this.playDelayAdjusted;
+    this.preConnectionSites = ['https://www.youtube.com', 'https://www.youtube-nocookie.com', 'https://player.vimeo.com'];
+    
+    this.setup();
+  }
+
+  connectedCallback() {
+    this.setup();
+  } 
+
+  setup() {
+    if (this._instantiated) return;
+
+    this.element = this.querySelector('button');
+    if (!this.element) return;
+
+		for (const item of this.getAttributeNames()) {
+      let prop = this.camelCase(item);
+      let value = this.checkBoolean(this.getAttribute(item));
+      this.options[prop] = value;
+		}
+
+    if (!Array.isArray(this.options.preConnections)) {
+      this.options.preConnections = this.options.preConnections.split(',').map(item => item.trim());
+    }
+
+    this.placeholder = this.querySelector(this.options['placeholderSelector']);
+    this.poster = this.querySelector(this.options['posterSelector']);
+    this.video = this.querySelector(this.options['videoSelector']);
+    if (this.placeholder === null || this.video === null) return;
+
+    this.video.setAttribute('aria-hidden', true);
+    this.video.setAttribute('tabindex', -1);
+
+    if (this.options.hideControlsOnLoad) {
+      this.hasControls = this.video.hasAttribute('controls');
+      if (this.hasControls) this.video.removeAttribute('controls');
+    }
+
+    if (this.options.playDelay === 'transition') this.options.playDelay = this.getTransitionDuration(this.placeholder);
+    this.playDelayAdjusted = (this.options.playDelay > this.options.playDelayOffset) ? this.options.playDelay - this.options.playDelayOffset : this.options.playDelay;
+
+    this.addEventListeners();
+
+    this._instantiated = true;
+  }
+
+  addEventListeners() {
+    this.placeholder.addEventListener('pointerover', (event) => {
+      this.warmConnections();
+    }, { once: true });   
+
+    this.placeholder.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.playVideo();
+    });
+  };
+
+
   // Utilities
   fireEvent(element, eventName, eventDetail) {
     const event = new CustomEvent(eventName, {
@@ -52,72 +130,13 @@ class ResponsiveVideoPoster extends HTMLElement {
     }
   };
 
-  camelCase(name, delim = '-') {
-    const pattern = new RegExp((delim + "([a-z])"), "g")
-    return name.replace(pattern, (match, capture) => capture.toUpperCase())
-  };
+  camelCase(text, delimiter = '-') {
+    const pattern = new RegExp((`${delimiter}([a-z])`), 'g');
+    return text.replace(pattern, (match, replacement) => replacement.toUpperCase());
+  }
 
-
-  // Init
-  constructor() {
-    super();
-
-    this.options = {
-      selector: '.responsive-video-poster',
-      placeholderSelector: '.rvp-placeholder',
-      posterSelector: '.rvp-poster',
-      videoSelector: '.rvp-video',
-      animClass: 'is-anim',
-      activeClass: 'is-active',
-      playDelay: 'transition',
-      playDelayOffset: 0,
-      hideControlsOnLoad: true,
-      hideControlsOnFirstPlay: false,
-      preConnections: [],
-    };
-
-    this.hasControls;
-    this.playDelayAdjusted;
-    this.preConnectionSites = ['https://www.youtube.com', 'https://www.youtube-nocookie.com', 'https://player.vimeo.com'];
-  
-		for (const item of this.getAttributeNames()) {
-      let prop = this.camelCase(item);
-      let value = this.checkBoolean(this.getAttribute(item));
-      this.options[prop] = value;
-		}
-
-    if (!Array.isArray(this.options.preConnections)) {
-      this.options.preConnections = this.options.preConnections.split(',').map(item => item.trim());
-    }
-
-    this.placeholder = this.querySelector(this.options['placeholderSelector']);
-    this.poster = this.querySelector(this.options['posterSelector']);
-    this.video = this.querySelector(this.options['videoSelector']);
-    if (this.placeholder === null || this.video === null) return;
-
-    this.video.setAttribute('aria-hidden', true);
-    this.video.setAttribute('tabindex', -1);
-
-    if (this.options.hideControlsOnLoad) {
-      this.hasControls = this.video.hasAttribute('controls');
-      if (this.hasControls) this.video.removeAttribute('controls');
-    }
-
-    if (this.options.playDelay === 'transition') this.options.playDelay = this.getTransitionDuration(this.placeholder);
-    this.playDelayAdjusted = (this.options.playDelay > this.options.playDelayOffset) ? this.options.playDelay - this.options.playDelayOffset : this.options.playDelay;
-  };
-
-  connectedCallback() {
-    this.placeholder.addEventListener('pointerover', (event) => {
-      this.warmConnections();
-    }, { once: true });   
-
-    this.placeholder.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.playVideo();
-    });
-  }  
-  
+ 
+  // Methods
   playVideo() {
     this.fireEvent(this, 'playVideo', { action: 'start' });
 
@@ -173,5 +192,4 @@ class ResponsiveVideoPoster extends HTMLElement {
 }
 
 customElements.define('responsive-video-poster', ResponsiveVideoPoster);
-
 export { ResponsiveVideoPoster };

@@ -11,7 +11,7 @@ Full styling control of video placeholders with an image/picture used for the po
 $ npm install responsive-video-poster --save-dev
 ```
 
-Import the JS and CSS into your project, add the elements to your HTML and initialize the plugin. 
+Import the JS and CSS into your project, add the elements to your HTML and initialize the plugin if needed. 
 
 [Full documentation](http://nigelotoole.github.io/responsive-video-poster/)
 
