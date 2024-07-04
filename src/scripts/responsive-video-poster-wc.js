@@ -32,9 +32,6 @@ class ResponsiveVideoPoster extends HTMLElement {
   setup() {
     if (this._instantiated) return;
 
-    this.element = this.querySelector('button');
-    if (!this.element) return;
-
 		for (const item of this.getAttributeNames()) {
       let prop = this.camelCase(item);
       let value = this.checkBoolean(this.getAttribute(item));
