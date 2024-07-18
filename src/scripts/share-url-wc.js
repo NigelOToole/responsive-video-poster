@@ -39,10 +39,8 @@ class ShareUrl extends HTMLElement {
       let value = this.checkBoolean(this.getAttribute(item));
       this.options[prop] = value;
 		}
-    console.log(this.element.href, this.options.action, this.getAttribute('action'))
 
     if (this.element.href && !this.getAttribute('action')) this.options.action = this.element.href;
-    console.log(this.options.action)
 
     if ((this.options.fallback && navigator.share !== undefined)) {
       this.hideElement();

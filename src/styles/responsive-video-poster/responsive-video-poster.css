@@ -92,6 +92,7 @@
   .rvp-video {
     border: 0;
     aspect-ratio: inherit;
+    height: 100%; /* Safari fix */
     background: #000;
   }
 
