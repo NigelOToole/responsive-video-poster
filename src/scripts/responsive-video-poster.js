@@ -12,6 +12,7 @@
   @param {boolean} hideControlsOnLoad - Hide video controls while transitioning placeholder.
   @param {boolean} hideControlsOnFirstPlay - Hide video controls on first video play.
   @param {array} preConnections - Domains to preconnect to for loading an embed. Youtube and Vimeo are automaticlly preconnected.
+  @param {boolean} embedApi - Embed Youtube API, this is autmatically added on Safari to get around autoplay restrictions.
 */
 
 
@@ -29,6 +30,7 @@ const ResponsiveVideoPoster = function(args) {
     hideControlsOnLoad: true,
     hideControlsOnFirstPlay: false,
     preConnections: [],
+    embedApi: false,
   }
 
   let options = {...defaults, ...args};
@@ -38,10 +40,12 @@ const ResponsiveVideoPoster = function(args) {
   let poster;
   let video;
 
+  let videoURL;
+  let videoURLSearchParams;
   let hasControls;
   let playDelayAdjusted;
   let preConnectionSites = ['https://www.youtube.com', 'https://www.youtube-nocookie.com', 'https://player.vimeo.com'];
-
+  let embedApiPlayer;
 
   // Utilities
   const fireEvent = (element, eventName, eventDetail) => {
@@ -98,7 +102,33 @@ const ResponsiveVideoPoster = function(args) {
 
 
   // Methods
-  const playVideo = function() {
+  const addembedApi = async function() {
+    let src = 'https://www.youtube.com/iframe_api';
+    if (document.querySelector(`script[src="${src}"]`) !== null || window.YT) return;
+
+    return new Promise((resolve, reject) => {
+      let element = document.createElement('script');
+      element.src = src;
+      element.async = true;
+
+      element.addEventListener('load', () => {
+        window.YT.ready(resolve);
+      });
+
+      element.addEventListener('error', () => {
+        reject(`Failed to load the script`);
+      });
+
+      document.querySelector('body').appendChild(element);
+    });
+  }
+
+  const handleembedApiError = function(error) {
+    //console.log(error);
+  }
+
+
+  const playVideo = async function() {
     fireEvent(element, 'playVideo', { action: 'start' });
 
     let playStart;
@@ -128,13 +158,26 @@ const ResponsiveVideoPoster = function(args) {
       if (video.getAttribute('allow') === null) video.setAttribute('allow', 'autoplay;');
       if (!video.getAttribute('allow').includes('autoplay')) video.setAttribute('allow', `autoplay; ${video.getAttribute('allow')}`);
 
-      let videoSrc = video.getAttribute('src');
-      video.setAttribute('src', '');
+      if (options.embedApi) {
+        if (window.YT) {
+          embedApiPlayer = new window.YT.Player(video, {
+            events: {
+              onReady: () => {
+                embedApiPlayer.playVideo();
+              }
+            }
+          });
+        }
+      }
+      else {
+        video.setAttribute('src', '');
+      }
 
       playStart = () => {
-        let videoURL = new URL(videoSrc);
-        videoURL.searchParams.append('autoplay', 1);    
-        video.setAttribute('src', videoURL.href);
+        if (!options.embedApi) {
+          videoURLSearchParams.append('autoplay', 1);    
+          video.setAttribute('src', videoURL.href);
+        }
       };
     }
 
@@ -163,7 +206,7 @@ const ResponsiveVideoPoster = function(args) {
   };
 
 
-  const setup = function() {
+  const setup = async function() {
 
     let datasetOptions = {...element.dataset};
     let datasetPrefix = 'rvp';
@@ -200,6 +243,18 @@ const ResponsiveVideoPoster = function(args) {
     playDelayAdjusted = (options.playDelay > options.playDelayOffset) ? options.playDelay - options.playDelayOffset : options.playDelay;
 
     addEventListeners();
+
+    if (video.nodeName === 'IFRAME') {
+      videoURL = new URL(video.getAttribute('src'));
+      videoURLSearchParams = videoURL.searchParams;
+
+      if (videoURLSearchParams.has('enablejsapi', 1) || navigator.userAgent.includes('Safari')) options.embedApi = true;
+      if (options.embedApi) {
+        videoURLSearchParams.append('enablejsapi', 1);
+        video.setAttribute('src', videoURL.href);
+        await addembedApi().catch(handleembedApiError);
+      } 
+    }
   };
 
 

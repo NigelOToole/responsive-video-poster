@@ -139,7 +139,7 @@
               </div>
 
               <div class="col-md-8">
-                
+              
                 <div class="responsive-video-poster" id="responsive-video-poster--embed">
                     
                   <button class="rvp-placeholder" aria-label="Play video">
@@ -150,7 +150,7 @@
                     <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 478px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="rvp-poster" width="1080" height="608" alt="Drone Grand Tour footage of the Tustan Karpaty mountains" loading="lazy">
                   </button>
 
-                  <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4?rel=0" class="rvp-video" srcdoc="" width="560" height="315" title="Drone Grand Tour footage of the Tustan Karpaty mountains" allowfullscreen allow="autoplay; fullscreen;" playsinline></iframe>
+                  <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4?rel=0" class="rvp-video" srcdoc="" width="560" height="315" title="Drone Grand Tour footage of the Tustan Karpaty mountains" playsinline allowfullscreen allow="autoplay; fullscreen;"></iframe>
                 </div>
 
               </div>
@@ -204,10 +204,8 @@
                   <video src="videos/coverr-lago-di-braies-1571919374360.mp4" class="rvp-video" width="1920" height="1080" preload="none" controls playsinline></video>
                 </responsive-video-poster>
 
-
-                <!-- 
-                <responsive-video-poster>
-                    
+                
+                <!-- <responsive-video-poster>
                   <button class="rvp-placeholder" aria-label="Play video">
                     <span class="rvp-button" aria-hidden="true">
                       <svg class="rvp-button-icon" viewBox="0 0 32 32"><path d="M9.48 29a2.65 2.65 0 0 1-1.13-.25A2.3 2.3 0 0 1 7 26.69V5.31a2.3 2.3 0 0 1 1.35-2.06 2.63 2.63 0 0 1 2.77.33l13 10.69a2.2 2.2 0 0 1 0 3.46l-13 10.69a2.61 2.61 0 0 1-1.64.58zm0-24a.61.61 0 0 0-.28.06c-.08 0-.21.12-.21.25v21.38c0 .13.13.21.21.25a.62.62 0 0 0 .64-.06l13-10.7a.2.2 0 0 0 0-.36l-13-10.7A.62.62 0 0 0 9.49 5z"/></svg>
@@ -216,10 +214,9 @@
                     <img srcset="images/720/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 720w, images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg 1080w" sizes="(min-width: 768px) 478px, 100vw" src="images/1080/Drone-Grand-Tour-Tustan-Karpaty-mountains.jpg" class="rvp-poster" width="1080" height="608" alt="Drone Grand Tour footage of the Tustan Karpaty mountains" loading="lazy">
                   </button>
 
-                  <iframe src="https://www.youtube-nocookie.com/embed/FjPvaGt6Pw4?rel=0" class="rvp-video" srcdoc="" width="560" height="315" title="Drone Grand Tour footage of the Tustan Karpaty mountains" allowfullscreen></iframe>
-                </responsive-video-poster> 
-                -->
-
+                  <iframe src="https://www.youtube.com/embed/FjPvaGt6Pw4?rel=0" class="rvp-video" srcdoc="" width="560" height="315" title="Drone Grand Tour footage of the Tustan Karpaty mountains" allowfullscreen></iframe>
+                </responsive-video-poster>  -->
+               
               </div>
 
             </div>
@@ -384,6 +381,12 @@ ResponsiveVideoPosterAuto();
               <td>Array || Comma seperated list</td>
               <td>Domains to preconnect to for loading an embed. Youtube and Vimeo are automatically preconnected.</td>
             </tr>
+            <tr>
+              <td><code>embedApi</code></td>
+              <td>false</td>
+              <td>Boolean</td>
+              <td>Embed Youtube API, this is autmatically added on Safari to get around autoplay restrictions. </td>
+            </tr>
           </table>
           </div>
 
@@ -452,7 +455,7 @@ $ npm run dev
 
           <h3>References</h3>
           <p>
-            <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g">Lazy loading of an embedded video</a> by Arthur Corenzan. <a href="https://web.dev/third-party-facades/">Lazy load third-party resources with facades</a>. <a href="https://blog.jim-nielsen.com/2023/html-web-components/">HTML Web Components</a> by Jim Nielsen<br>
+            <a href="https://dev.to/haggen/lazy-load-embedded-youtube-videos-520g">Lazy loading of an embedded video</a> by Arthur Corenzan. <a href="https://web.dev/third-party-facades/">Lazy load third-party resources with facades</a>. <a href="https://blog.jim-nielsen.com/2023/html-web-components/">HTML Web Components</a> by Jim Nielsen <a href="https://github.com/paulirish/lite-youtube-embed">Lite YouTube Embed</a> by Paul Irish.<br>
             Covverr videos of <a href="https://coverr.co/videos/lago-di-braies-y1yBShzUTZ">Lago di braies</a> and <a href="https://coverr.co/videos/lofoten-rocks-GPfWh8WOtG">Lofoten rocks</a>. Youtube video of <a href="https://www.youtube.com/watch?v=FjPvaGt6Pw4">Tustan Karpaty mountains</a>.
           </p>
 

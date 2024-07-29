@@ -20,7 +20,8 @@ const responsiveVideoPosterEmbedElement = document.querySelector('#responsive-vi
 
 const responsiveVideoPosterEmbed = ResponsiveVideoPoster({
   selector: responsiveVideoPosterEmbedElement,
-  playDelayOffset: 250
+  playDelayOffset: 250,
+  // embedAPI: true
 });
 
 const responsiveVideoPosterNoImage = ResponsiveVideoPoster({ 

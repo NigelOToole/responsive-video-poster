@@ -16,12 +16,16 @@ class ResponsiveVideoPoster extends HTMLElement {
       hideControlsOnLoad: true,
       hideControlsOnFirstPlay: false,
       preConnections: [],
+      embedApi: false,
     };
 
+    this.videoURL;
+    this.videoURLSearchParams;  
     this.hasControls;
     this.playDelayAdjusted;
     this.preConnectionSites = ['https://www.youtube.com', 'https://www.youtube-nocookie.com', 'https://player.vimeo.com'];
-    
+    this.embedApiPlayer;
+
     this.setup();
   }
 
@@ -29,7 +33,7 @@ class ResponsiveVideoPoster extends HTMLElement {
     this.setup();
   } 
 
-  setup() {
+  async setup() {
     if (this._instantiated) return;
 
 		for (const item of this.getAttributeNames()) {
@@ -59,8 +63,19 @@ class ResponsiveVideoPoster extends HTMLElement {
     this.playDelayAdjusted = (this.options.playDelay > this.options.playDelayOffset) ? this.options.playDelay - this.options.playDelayOffset : this.options.playDelay;
 
     this.addEventListeners();
-
     this._instantiated = true;
+
+    if (this.video.nodeName === 'IFRAME') {
+      this.videoURL = new URL(this.video.getAttribute('src'));
+      this.videoURLSearchParams = this.videoURL.searchParams;
+  
+      if (this.videoURLSearchParams.has('enablejsapi', 1) || navigator.userAgent.includes('Safari')) this.options.embedApi = true;
+      if (this.options.embedApi) {
+        this.videoURLSearchParams.append('enablejsapi', 1);
+        this.video.setAttribute('src', this.videoURL.href);
+        await this.addembedApi().catch(this.handleembedApiError);
+      } 
+    }
   }
 
   addEventListeners() {
@@ -134,6 +149,31 @@ class ResponsiveVideoPoster extends HTMLElement {
 
  
   // Methods
+  async addembedApi() {
+    let src = 'https://www.youtube.com/iframe_api';
+    if (document.querySelector(`script[src="${src}"]`) !== null || window.YT) return;
+
+    return new Promise((resolve, reject) => {
+      let element = document.createElement('script');
+      element.src = src;
+      element.async = true;
+
+      element.addEventListener('load', () => {
+        window.YT.ready(resolve);
+      });
+
+      element.addEventListener('error', () => {
+        reject(`Failed to load the script`);
+      });
+
+      document.querySelector('body').appendChild(element);
+    });
+  }
+
+  handleembedApiError(error) {
+    //console.log(error);
+  }
+
   playVideo() {
     this.fireEvent(this, 'playVideo', { action: 'start' });
 
@@ -164,13 +204,26 @@ class ResponsiveVideoPoster extends HTMLElement {
       if (this.video.getAttribute('allow') === null) this.video.setAttribute('allow', 'autoplay;');
       if (!this.video.getAttribute('allow').includes('autoplay')) this.video.setAttribute('allow', `autoplay; ${this.video.getAttribute('allow')}`);
 
-      let videoSrc = this.video.getAttribute('src');
-      this.video.setAttribute('src', '');
+      if (this.options.embedApi) {
+        if (window.YT) {
+          this.embedApiPlayer = new window.YT.Player(this.video, {
+            events: {
+              onReady: () => {
+                this.embedApiPlayer.playVideo();
+              }
+            }
+          });
+        }
+      }
+      else {
+        this.video.setAttribute('src', '');
+      }
 
       playStart = () => {
-        let videoURL = new URL(videoSrc);
-        videoURL.searchParams.append('autoplay', 1);    
-        this.video.setAttribute('src', videoURL.href);
+        if (!this.options.embedApi) {
+          this.videoURL.searchParams.append('autoplay', 1);    
+          this.video.setAttribute('src', this.videoURL.href);
+        }
       };
     }
 
